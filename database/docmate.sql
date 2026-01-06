@@ -39,6 +39,7 @@ VALUES ('admin@docmate.com', 'admin123', 'admin')
 ON DUPLICATE KEY UPDATE 
     email = 'admin@docmate.com', 
     password = 'admin123';
+<<<<<<< HEAD
 CREATE DATABASE docmate;
 USE docmate;
 
@@ -59,3 +60,5 @@ CREATE TABLE patients (
     nid VARCHAR(20),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+=======
+>>>>>>> 49836ad91490b605f7b878e38a6bf9ea7a2191b4

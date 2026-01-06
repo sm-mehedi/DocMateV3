@@ -34,3 +34,8 @@ CREATE TABLE doctors (
     description TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+VALUES ('admin@docmate.com', 'admin123', 'admin')
+ON DUPLICATE KEY UPDATE 
+    email = 'admin@docmate.com', 
+    password = 'admin123';

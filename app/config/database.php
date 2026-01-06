@@ -9,3 +9,4 @@ try {
 // Start session safely
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
+}

@@ -113,4 +113,20 @@ if(isset($_POST['add_user'])){
 <br>
 
 
-    
+div class="search-bar">
+<input type="text" id="searchInput" placeholder="Search by name...">
+</div>
+
+<div id="patientsSection" class="cards-section">
+<?php foreach($patients as $p): ?>
+<div class="card">
+    <h3><?= htmlspecialchars($p['name']) ?></h3>
+    <p><strong>Email:</strong> <?= htmlspecialchars($p['email']) ?></p>
+    <p><strong>Phone:</strong> <?= htmlspecialchars($p['phone'] ?? '-') ?></p>
+    <p><strong>Health Issues:</strong> <?= htmlspecialchars($p['health_issues'] ?? '-') ?></p>
+    <p><strong>Emergency Contact:</strong> <?= htmlspecialchars($p['emergency'] ?? '-') ?></p>
+    <p><strong>NID:</strong> <?= htmlspecialchars($p['nid'] ?? '-') ?></p>
+    <a href="?delete_user=<?= $p['user_id'] ?>" class="delete-btn" onclick="return confirm('Delete this patient?')">Delete</a>
+</div>
+<?php endforeach; ?>
+</div>

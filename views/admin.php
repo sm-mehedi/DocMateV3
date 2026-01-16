@@ -147,3 +147,16 @@ div class="search-bar">
         </div>
         <?php endforeach; ?>
     </div>
+
+    <div class="instructions" style="background:#f0f8ff; padding:10px; border-left:4px solid #007BFF; margin-bottom:10px;">
+    <strong>Instructions for Updating User Info:</strong>
+    <ul>
+        <li>Fill in all fields you want to update.</li>
+        <li>Email must be valid and unique.</li>
+        <li>Phone & Emergency must be 10-15 digits.</li>
+        <li>NID must be 10-17 digits.</li>
+        <li>Leave password empty if you don't want to change it.</li>
+        <li>All fields marked required must not be empty.</li>
+        <li>Click the <strong>Update</strong> button to save changes.</li>
+    </ul>
+</div>

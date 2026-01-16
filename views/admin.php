@@ -57,5 +57,14 @@ if(isset($_POST['add_user'])){
         $description = trim($_POST['description']);
 
 
-
+        if(!$name) $errorsAdd['name'] = "Name required!";
+        if(!$degree) $errorsAdd['degree'] = "Degree required!";
+        if(!preg_match('/^\d{10,15}$/', $phone)) $errorsAdd['phone'] = "Phone must be 10-15 digits!";
+        if(!$bmdc) $errorsAdd['bmdc'] = "BMDC required!";
+        if(!$nid || !preg_match('/^\d{10,17}$/', $nid)) $errorsAdd['nid'] = "NID must be 10-17 digits!";
+        if(!$address) $errorsAdd['address'] = "Address required!";
+        if(!$chamber) $errorsAdd['chamber'] = "Chamber required!";
+        if(!$available_days) $errorsAdd['available_days'] = "Available days required!";
+        if(!$available_time) $errorsAdd['available_time'] = "Available time required!";
+        if(!$description) $errorsAdd['description'] = "Description required!";
     }

@@ -44,7 +44,64 @@ if(isset($_POST['add_user'])){
 
 
     if($role === 'doctor'){
+        $name = trim($_POST['name']);
+        $degree = trim($_POST['degree']);
+        $phone = trim($_POST['phone']);
+        $bmdc = trim($_POST['bmdc']);
+        $nid = trim($_POST['nid']);
+        $address = trim($_POST['address']);
+        $chamber = trim($_POST['chamber']);
+        $available_days = trim($_POST['available_days']);
+        $available_time = trim($_POST['available_time']);
+        $is_available = $_POST['is_available'] ?? 0;
+        $description = trim($_POST['description']);
 
 
-
+        if(!$name) $errorsAdd['name'] = "Name required!";
+        if(!$degree) $errorsAdd['degree'] = "Degree required!";
+        if(!preg_match('/^\d{10,15}$/', $phone)) $errorsAdd['phone'] = "Phone must be 10-15 digits!";
+        if(!$bmdc) $errorsAdd['bmdc'] = "BMDC required!";
+        if(!$nid || !preg_match('/^\d{10,17}$/', $nid)) $errorsAdd['nid'] = "NID must be 10-17 digits!";
+        if(!$address) $errorsAdd['address'] = "Address required!";
+        if(!$chamber) $errorsAdd['chamber'] = "Chamber required!";
+        if(!$available_days) $errorsAdd['available_days'] = "Available days required!";
+        if(!$available_time) $errorsAdd['available_time'] = "Available time required!";
+        if(!$description) $errorsAdd['description'] = "Description required!";
     }
+    if(empty($errorsAdd)){
+        // Insert into users
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email=?");
+    $stmt->execute([$email]);
+    if($stmt->rowCount() > 0){
+        $errorsAdd['email'] = "Email already exists!";
+    } else {
+        $conn->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)")->execute([$email, $password, $role]);
+        $user_id = $conn->lastInsertId();
+
+        if($role === 'patient'){
+            $conn->prepare("INSERT INTO patients (user_id, name, phone, address, health_issues, emergency, nid) VALUES (?, ?, ?, ?, ?, ?, ?)")
+                 ->execute([$user_id, $name, $phone, $address, $health_issues, $emergency, $nid]);
+        } elseif($role === 'doctor'){
+            $conn->prepare("INSERT INTO doctors (user_id, name, degree, phone, bmdc, nid, address, chamber, available_days, available_time, is_available, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                 ->execute([$user_id, $name, $degree, $phone, $bmdc, $nid, $address, $chamber, $available_days, $available_time, $is_available, $description]);
+        }
+        $successAdd = "✅ $role added successfully!";
+    }
+}
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+
+
+    

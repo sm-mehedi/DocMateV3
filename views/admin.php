@@ -44,6 +44,17 @@ if(isset($_POST['add_user'])){
 
 
     if($role === 'doctor'){
+        $name = trim($_POST['name']);
+        $degree = trim($_POST['degree']);
+        $phone = trim($_POST['phone']);
+        $bmdc = trim($_POST['bmdc']);
+        $nid = trim($_POST['nid']);
+        $address = trim($_POST['address']);
+        $chamber = trim($_POST['chamber']);
+        $available_days = trim($_POST['available_days']);
+        $available_time = trim($_POST['available_time']);
+        $is_available = $_POST['is_available'] ?? 0;
+        $description = trim($_POST['description']);
 
 
 

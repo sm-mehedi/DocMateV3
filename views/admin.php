@@ -405,3 +405,14 @@ div class="search-bar">
 
 
     <hr>
+    <div class="instructions" style="background:#e6ffe6; padding:10px; border-left:4px solid #28a745; margin-bottom:10px;">
+    <strong>Instructions for Medicine Manager:</strong>
+    <ul>
+        <li>Enter medicines in valid JSON format.</li>
+        <li>Example: <code>[{"name":"Paracetamol","quantity":50},{"name":"Ibuprofen","quantity":100}]</code></li>
+        <li>Click <strong>💾 Save Medicines</strong> to update.</li>
+        <li>Click <strong>✨ Format JSON</strong> to auto-format your JSON for readability.</li>
+        <li>Invalid JSON will show an error.</li>
+    </ul>
+</div>
+

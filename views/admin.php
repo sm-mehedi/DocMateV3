@@ -171,3 +171,13 @@ div class="search-bar">
     </ul>
 </div>
     
+<h2>Update User Info</h2>
+<?php if(!empty($success)): ?>
+    <p style="color:green;font-weight:bold;"><?= $success ?></p>
+<?php endif; ?>
+
+<div class="toggle-buttons">
+    <button id="showPatientUsers">Patients</button>
+    <button id="showDoctorUsers">Doctors</button>
+</div>
+

@@ -181,3 +181,36 @@ div class="search-bar">
     <button id="showDoctorUsers">Doctors</button>
 </div>
 
+<div id="patientUsers" class="cards-section">
+    <?php foreach($patients as $p): ?>
+    <div class="card">
+        <form method="POST" >
+            <input type="hidden" name="user_id" value="<?= $p['user_id'] ?>">
+            <input type="text" name="name" value="<?= htmlspecialchars($p['name']) ?>" placeholder="Name">
+            <small style="color:red"><?= $errors['name'] ?? '' ?></small>
+
+            <input type="email" name="email" value="<?= htmlspecialchars($p['email']) ?>" placeholder="Email">
+            <small style="color:red"><?= $errors['email'] ?? '' ?></small>
+
+            <input type="password" name="password" placeholder="New Password (leave empty to keep)">
+            
+            <input type="text" name="phone" value="<?= htmlspecialchars($p['phone']) ?>" placeholder="Phone">
+            <small style="color:red"><?= $errors['phone'] ?? '' ?></small>
+
+            <input type="text" name="address" value="<?= htmlspecialchars($p['address']) ?>" placeholder="Address">
+            <small style="color:red"><?= $errors['address'] ?? '' ?></small>
+
+            <input type="text" name="health_issues" value="<?= htmlspecialchars($p['health_issues']) ?>" placeholder="Health Issues">
+            <small style="color:red"><?= $errors['health_issues'] ?? '' ?></small>
+
+            <input type="text" name="emergency" value="<?= htmlspecialchars($p['emergency']) ?>" placeholder="Emergency Contact">
+            <small style="color:red"><?= $errors['emergency'] ?? '' ?></small>
+
+            <input type="text" name="nid" value="<?= htmlspecialchars($p['nid']) ?>" placeholder="NID">
+            <small style="color:red"><?= $errors['nid'] ?? '' ?></small>
+
+            <button name="update_patient">Update Patient</button>
+        </form>
+    </div>
+    <?php endforeach; ?>
+</div>

@@ -416,3 +416,4 @@ div class="search-bar">
     </ul>
 </div>
 
+</div>

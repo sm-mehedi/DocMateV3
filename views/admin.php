@@ -363,3 +363,18 @@ div class="search-bar">
         <button name="add_user">Add Admin</button>
     </form>
 </div>
+
+<div id="addPatient" class="cards-section" style="display:none;">
+    <form method="POST">
+        <input type="hidden" name="role" value="patient">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="text" name="phone" placeholder="Phone">
+        <input type="text" name="address" placeholder="Address">
+        <input type="text" name="health_issues" placeholder="Health Issues">
+        <input type="text" name="emergency" placeholder="Emergency Contact">
+        <input type="text" name="nid" placeholder="NID">
+        <button name="add_user">Add Patient</button>
+    </form>
+</div>

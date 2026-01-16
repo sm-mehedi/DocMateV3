@@ -67,4 +67,7 @@ if(isset($_POST['add_user'])){
         if(!$available_days) $errorsAdd['available_days'] = "Available days required!";
         if(!$available_time) $errorsAdd['available_time'] = "Available time required!";
         if(!$description) $errorsAdd['description'] = "Description required!";
+
+
+
     }

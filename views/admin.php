@@ -363,3 +363,4 @@ div class="search-bar">
         <button name="add_user">Add Admin</button>
     </form>
 </div>
+</div>

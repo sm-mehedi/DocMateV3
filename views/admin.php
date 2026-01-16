@@ -68,3 +68,24 @@ if(isset($_POST['add_user'])){
         if(!$available_time) $errorsAdd['available_time'] = "Available time required!";
         if(!$description) $errorsAdd['description'] = "Description required!";
     }
+    if(empty($errorsAdd)){
+        // Insert into users
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email=?");
+    $stmt->execute([$email]);
+    if($stmt->rowCount() > 0){
+        $errorsAdd['email'] = "Email already exists!";
+    } else {
+        $conn->prepare("INSERT INTO users (email, password, role) VALUES (?, ?, ?)")->execute([$email, $password, $role]);
+        $user_id = $conn->lastInsertId();
+
+        if($role === 'patient'){
+            $conn->prepare("INSERT INTO patients (user_id, name, phone, address, health_issues, emergency, nid) VALUES (?, ?, ?, ?, ?, ?, ?)")
+                 ->execute([$user_id, $name, $phone, $address, $health_issues, $emergency, $nid]);
+        } elseif($role === 'doctor'){
+            $conn->prepare("INSERT INTO doctors (user_id, name, degree, phone, bmdc, nid, address, chamber, available_days, available_time, is_available, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+                 ->execute([$user_id, $name, $degree, $phone, $bmdc, $nid, $address, $chamber, $available_days, $available_time, $is_available, $description]);
+        }
+        $successAdd = "✅ $role added successfully!";
+    }
+}
+}

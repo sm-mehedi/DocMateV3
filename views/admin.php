@@ -265,3 +265,79 @@ div class="search-bar">
     </div>
     <?php endforeach; ?>
 </div>
+
+<hr>
+<hr>
+<div class="instructions" style="background:#f9f9e6; padding:10px; border-left:4px solid #ffc107; margin-bottom:10px;">
+    <strong>Instructions for Adding New User:</strong>
+    <ul>
+        <li>Email must be valid and unique.</li>
+        <li>Password is required.</li>
+        <li>Patient fields:</li>
+        <ul>
+            <li>Name and Address are required.</li>
+            <li>Phone & Emergency must be 10-15 digits.</li>
+            <li>NID must be 10-17 digits.</li>
+            <li>Health Issues description is required.</li>
+        </ul>
+        <li>Doctor fields:</li>
+        <ul>
+            <li>Name, Degree, BMDC, Address, Chamber, Available Days & Time, and Description are required.</li>
+            <li>Phone must be 10-15 digits.</li>
+     <div id="doctorUsers" class="cards-section" style="display:none;">
+    <?php foreach($doctors as $d): ?>
+    <div class="card">
+        <form method="POST">
+            <input type="hidden" name="user_id" value="<?= $d['user_id'] ?>">
+
+            <input type="text" name="name" value="<?= htmlspecialchars($d['name']) ?>" placeholder="Name">
+            <small style="color:red"><?= $errors['name'] ?? '' ?></small>
+
+            <input type="email" name="email" value="<?= htmlspecialchars($d['email']) ?>" placeholder="Email">
+            <small style="color:red"><?= $errors['email'] ?? '' ?></small>
+
+            <input type="password" name="password" placeholder="New Password (leave empty to keep)">
+
+            <input type="text" name="degree" value="<?= htmlspecialchars($d['degree']) ?>" placeholder="Degree">
+            <small style="color:red"><?= $errors['degree'] ?? '' ?></small>
+
+            <input type="text" name="phone" value="<?= htmlspecialchars($d['phone']) ?>" placeholder="Phone">
+            <small style="color:red"><?= $errors['phone'] ?? '' ?></small>
+
+            <input type="text" name="bmdc" value="<?= htmlspecialchars($d['bmdc']) ?>" placeholder="BMDC">
+            <small style="color:red"><?= $errors['bmdc'] ?? '' ?></small>
+
+            <input type="text" name="nid" value="<?= htmlspecialchars($d['nid']) ?>" placeholder="NID">
+            <small style="color:red"><?= $errors['nid'] ?? '' ?></small>
+
+            <input type="text" name="address" value="<?= htmlspecialchars($d['address']) ?>" placeholder="Address">
+            <small style="color:red"><?= $errors['address'] ?? '' ?></small>
+
+            <input type="text" name="chamber" value="<?= htmlspecialchars($d['chamber']) ?>" placeholder="Chamber">
+            <small style="color:red"><?= $errors['chamber'] ?? '' ?></small>
+
+            <input type="text" name="available_days" value="<?= htmlspecialchars($d['available_days']) ?>" placeholder="Available Days">
+            <small style="color:red"><?= $errors['available_days'] ?? '' ?></small>
+
+            <input type="text" name="available_time" value="<?= htmlspecialchars($d['available_time']) ?>" placeholder="Available Time">
+            <small style="color:red"><?= $errors['available_time'] ?? '' ?></small>
+
+            <select name="is_available">
+                <option value="1" <?= $d['is_available'] ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= !$d['is_available'] ? 'selected' : '' ?>>No</option>
+            </select>
+
+            <input type="text" name="description" value="<?= htmlspecialchars($d['description']) ?>" placeholder="Description">
+            <small style="color:red"><?= $errors['description'] ?? '' ?></small>
+
+            <button name="update_doctor">Update Doctor</button>
+        </form>
+    </div>
+    <?php endforeach; ?>
+</div>
+       <li>NID must be 10-17 digits.</li>
+            <li>Is Available must be Yes or No.</li>
+        </ul>
+        <li>Click <strong>Add</strong> button to save the new user.</li>
+    </ul>
+</div>

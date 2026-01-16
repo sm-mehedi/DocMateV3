@@ -111,6 +111,16 @@ if(isset($_POST['add_user'])){
 
     <span>Search</span>
 <br>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
 
 
 div class="search-bar">
@@ -160,3 +170,4 @@ div class="search-bar">
         <li>Click the <strong>Update</strong> button to save changes.</li>
     </ul>
 </div>
+    

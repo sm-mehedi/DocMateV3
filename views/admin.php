@@ -415,4 +415,31 @@ div class="search-bar">
         <li>Invalid JSON will show an error.</li>
     </ul>
 </div>
+<h2>💊 Medicine Manager</h2>
+
+<?php if($medicineError): ?>
+    <p style="color:red;font-weight:bold;"><?= $medicineError ?></p>
+<?php endif; ?>
+
+<?php if($medicineSuccess): ?>
+    <p style="color:green;font-weight:bold;"><?= $medicineSuccess ?></p>
+<?php endif; ?>
+
+<form method="POST">
+    <textarea name="medicines_json"
+              rows="15"
+              style="width:100%; font-family:monospace;"
+              required><?= htmlspecialchars($medicineJson) ?></textarea>
+
+    <br><br>
+    <button type="submit" name="save_medicines" class="btn">
+        💾 Save Medicines
+    </button>
+</form>
+<button onclick="formatJSON()" type="button" class="btn">
+    ✨ Format JSON
+</button>
+
+    <a href="../public/logout.php" class="logout-btn">Logout</a>
+</div>
 

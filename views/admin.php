@@ -91,17 +91,26 @@ if(isset($_POST['add_user'])){
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../public/assets/css/admin.css">
 </head>
 <body>
-    
-</body>
-</html>
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <div class="counts">
+        <div class="count-box">Total Patients: <?= $pCount ?></div>
+        <div class="count-box">Total Doctors: <?= $dCount ?></div>
+    </div>
 
+    <div class="toggle-buttons">
+        <button id="showPatients">Patients</button>
+        <button id="showDoctors">Doctors</button>
+    </div>
+
+    <span>Search</span>
+<br>
 
 
     

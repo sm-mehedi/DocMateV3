@@ -353,3 +353,13 @@ div class="search-bar">
     <button id="addPatientBtn">Patient</button>
     <button id="addDoctorBtn">Doctor</button>
 </div>
+<div id="addAdmin" class="cards-section">
+    <form method="POST">
+        <input type="hidden" name="role" value="admin">
+        <input type="email" name="email" placeholder="Email">
+        <small style="color:red"><?= $errorsAdd['email'] ?? '' ?></small>
+        <input type="password" name="password" placeholder="Password">
+        <small style="color:red"><?= $errorsAdd['password'] ?? '' ?></small>
+        <button name="add_user">Add Admin</button>
+    </form>
+</div>

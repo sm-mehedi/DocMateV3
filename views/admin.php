@@ -341,3 +341,41 @@ div class="search-bar">
         <li>Click <strong>Add</strong> button to save the new user.</li>
     </ul>
 </div>
+
+
+<h2>Add New User</h2>
+<?php if(!empty($successAdd)): ?>
+    <p style="color:green;font-weight:bold;"><?= $successAdd ?></p>
+<?php endif; ?>
+
+<div class="toggle-buttons">
+    <button id="addAdminBtn">Admin</button>
+    <button id="addPatientBtn">Patient</button>
+    <button id="addDoctorBtn">Doctor</button>
+</div>
+<div id="addAdmin" class="cards-section">
+    <form method="POST">
+        <input type="hidden" name="role" value="admin">
+        <input type="email" name="email" placeholder="Email">
+        <small style="color:red"><?= $errorsAdd['email'] ?? '' ?></small>
+        <input type="password" name="password" placeholder="Password">
+        <small style="color:red"><?= $errorsAdd['password'] ?? '' ?></small>
+        <button name="add_user">Add Admin</button>
+    </form>
+</div>
+</div>
+
+<div id="addPatient" class="cards-section" style="display:none;">
+    <form method="POST">
+        <input type="hidden" name="role" value="patient">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="text" name="phone" placeholder="Phone">
+        <input type="text" name="address" placeholder="Address">
+        <input type="text" name="health_issues" placeholder="Health Issues">
+        <input type="text" name="emergency" placeholder="Emergency Contact">
+        <input type="text" name="nid" placeholder="NID">
+        <button name="add_user">Add Patient</button>
+    </form>
+</div>

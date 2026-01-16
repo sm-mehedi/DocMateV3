@@ -443,3 +443,4 @@ div class="search-bar">
     <a href="../public/logout.php" class="logout-btn">Logout</a>
 </div>
 
+</div>

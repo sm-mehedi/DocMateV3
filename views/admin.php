@@ -454,3 +454,77 @@ const searchInput = document.getElementById('searchInput');
 const showPatientUsersBtn = document.getElementById('showPatientUsers');
 const showDoctorUsersBtn = document.getElementById('showDoctorUsers');
 const patientUsers = document.getElementById('patientUsers');
+
+const doctorUsers = document.getElementById('doctorUsers');
+
+showPatientUsersBtn.addEventListener('click', () => {
+    patientUsers.style.display = 'flex';
+    doctorUsers.style.display = 'none';
+});
+showDoctorUsersBtn.addEventListener('click', () => {
+    doctorUsers.style.display = 'flex';
+    patientUsers.style.display = 'none';
+});
+
+function formatJSON(){
+    try{
+        const ta = document.querySelector('[name="medicines_json"]');
+        ta.value = JSON.stringify(JSON.parse(ta.value), null, 2);
+    }catch(e){
+        alert("Invalid JSON – can't format!");
+    }
+}
+
+// Toggle sections
+showPatientsBtn.addEventListener('click', () => {
+    patientsSection.style.display = 'flex';
+    doctorsSection.style.display = 'none';
+    searchInput.value = '';
+    filterCards();
+});
+
+showDoctorsBtn.addEventListener('click', () => {
+    doctorsSection.style.display = 'flex';
+    patientsSection.style.display = 'none';
+    searchInput.value = '';
+    filterCards();
+});
+
+// Search function
+searchInput.addEventListener('input', filterCards);
+
+function filterCards() {
+    const val = searchInput.value.toLowerCase();
+    const activeSection = patientsSection.style.display !== 'none' ? patientsSection : doctorsSection;
+    const cards = activeSection.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.display = card.querySelector('h3').textContent.toLowerCase().includes(val) ? 'block' : 'none';
+    });
+}
+const addAdminBtn = document.getElementById('addAdminBtn');
+const addPatientBtn = document.getElementById('addPatientBtn');
+const addDoctorBtn = document.getElementById('addDoctorBtn');
+
+const addAdmin = document.getElementById('addAdmin');
+const addPatient = document.getElementById('addPatient');
+const addDoctor = document.getElementById('addDoctor');
+
+addAdminBtn.addEventListener('click', () => {
+    addAdmin.style.display = 'flex';
+    addPatient.style.display = 'none';
+    addDoctor.style.display = 'none';
+});
+addPatientBtn.addEventListener('click', () => {
+    addAdmin.style.display = 'none';
+    addPatient.style.display = 'flex';
+    addDoctor.style.display = 'none';
+});
+addDoctorBtn.addEventListener('click', () => {
+    addAdmin.style.display = 'none';
+    addPatient.style.display = 'none';
+    addDoctor.style.display = 'flex';
+});
+
+</script>
+</body>
+</html>

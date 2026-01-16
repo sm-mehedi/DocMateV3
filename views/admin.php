@@ -444,3 +444,13 @@ div class="search-bar">
 </div>
 
 </div>
+
+<script>
+const patientsSection = document.getElementById('patientsSection');
+const doctorsSection = document.getElementById('doctorsSection');
+const showPatientsBtn = document.getElementById('showPatients');
+const showDoctorsBtn = document.getElementById('showDoctors');
+const searchInput = document.getElementById('searchInput');
+const showPatientUsersBtn = document.getElementById('showPatientUsers');
+const showDoctorUsersBtn = document.getElementById('showDoctorUsers');
+const patientUsers = document.getElementById('patientUsers');

@@ -41,3 +41,10 @@ if(isset($_POST['add_user'])){
         if(!$emergency || !preg_match('/^\d{10,15}$/', $emergency)) $errorsAdd['emergency'] = "Emergency must be 10-15 digits!";
         if(!$nid || !preg_match('/^\d{10,17}$/', $nid)) $errorsAdd['nid'] = "NID must be 10-17 digits!";
     }
+
+
+    if($role === 'doctor'){
+
+
+
+    }

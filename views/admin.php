@@ -379,3 +379,29 @@ div class="search-bar">
         <button name="add_user">Add Patient</button>
     </form>
 </div>
+
+<div id="addDoctor" class="cards-section" style="display:none;">
+    <form method="POST">
+        <input type="hidden" name="role" value="doctor">
+        <input type="text" name="name" placeholder="Name">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="text" name="degree" placeholder="Degree">
+        <input type="text" name="phone" placeholder="Phone">
+        <input type="text" name="bmdc" placeholder="BMDC">
+        <input type="text" name="nid" placeholder="NID">
+        <input type="text" name="address" placeholder="Address">
+        <input type="text" name="chamber" placeholder="Chamber">
+        <input type="text" name="available_days" placeholder="Available Days">
+        <input type="text" name="available_time" placeholder="Available Time">
+        <select name="is_available">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        <input type="text" name="description" placeholder="Description">
+        <button name="add_user">Add Doctor</button>
+    </form>
+</div>
+
+
+    <hr>

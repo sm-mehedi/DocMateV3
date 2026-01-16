@@ -341,3 +341,15 @@ div class="search-bar">
         <li>Click <strong>Add</strong> button to save the new user.</li>
     </ul>
 </div>
+
+
+<h2>Add New User</h2>
+<?php if(!empty($successAdd)): ?>
+    <p style="color:green;font-weight:bold;"><?= $successAdd ?></p>
+<?php endif; ?>
+
+<div class="toggle-buttons">
+    <button id="addAdminBtn">Admin</button>
+    <button id="addPatientBtn">Patient</button>
+    <button id="addDoctorBtn">Doctor</button>
+</div>

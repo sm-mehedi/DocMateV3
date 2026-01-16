@@ -130,3 +130,20 @@ div class="search-bar">
 </div>
 <?php endforeach; ?>
 </div>
+<div id="doctorsSection" class="cards-section" style="display:none;">
+        <?php foreach($doctors as $d): ?>
+        <div class="card">
+            <h3><?= htmlspecialchars($d['name']) ?></h3>
+            <p><strong>Email:</strong> <?= htmlspecialchars($d['email']) ?></p>
+            <p><strong>Phone:</strong> <?= htmlspecialchars($d['phone'] ?? '-') ?></p>
+            <p><strong>Degree:</strong> <?= htmlspecialchars($d['degree'] ?? '-') ?></p>
+            <p><strong>BMDC:</strong> <?= htmlspecialchars($d['bmdc'] ?? '-') ?></p>
+            <p><strong>NID:</strong> <?= htmlspecialchars($d['nid'] ?? '-') ?></p>
+            <p><strong>Address:</strong> <?= htmlspecialchars($d['address'] ?? '-') ?></p>
+            <p><strong>Chamber:</strong> <?= htmlspecialchars($d['chamber'] ?? '-') ?></p>
+            <p><strong>Available Days:</strong> <?= htmlspecialchars($d['available_days'] ?? '-') ?></p>
+            <p><strong>Description:</strong> <?= htmlspecialchars($d['description'] ?? '-') ?></p>
+            <a href="?delete_user=<?= $d['user_id'] ?>" class="delete-btn" onclick="return confirm('Delete this doctor?')">Delete</a>
+        </div>
+        <?php endforeach; ?>
+    </div>

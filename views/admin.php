@@ -91,6 +91,26 @@ if(isset($_POST['add_user'])){
 }
 
 <!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../public/assets/css/admin.css">
+</head>
+<body>
+<div class="container">
+    <h1>Admin Dashboard</h1>
+    <div class="counts">
+        <div class="count-box">Total Patients: <?= $pCount ?></div>
+        <div class="count-box">Total Doctors: <?= $dCount ?></div>
+    </div>
+
+    <div class="toggle-buttons">
+        <button id="showPatients">Patients</button>
+        <button id="showDoctors">Doctors</button>
+    </div>
+
+    <span>Search</span>
+<br>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -103,5 +123,221 @@ if(isset($_POST['add_user'])){
 </html>
 
 
+div class="search-bar">
+<input type="text" id="searchInput" placeholder="Search by name...">
+</div>
 
+<div id="patientsSection" class="cards-section">
+<?php foreach($patients as $p): ?>
+<div class="card">
+    <h3><?= htmlspecialchars($p['name']) ?></h3>
+    <p><strong>Email:</strong> <?= htmlspecialchars($p['email']) ?></p>
+    <p><strong>Phone:</strong> <?= htmlspecialchars($p['phone'] ?? '-') ?></p>
+    <p><strong>Health Issues:</strong> <?= htmlspecialchars($p['health_issues'] ?? '-') ?></p>
+    <p><strong>Emergency Contact:</strong> <?= htmlspecialchars($p['emergency'] ?? '-') ?></p>
+    <p><strong>NID:</strong> <?= htmlspecialchars($p['nid'] ?? '-') ?></p>
+    <a href="?delete_user=<?= $p['user_id'] ?>" class="delete-btn" onclick="return confirm('Delete this patient?')">Delete</a>
+</div>
+<?php endforeach; ?>
+</div>
+<div id="doctorsSection" class="cards-section" style="display:none;">
+        <?php foreach($doctors as $d): ?>
+        <div class="card">
+            <h3><?= htmlspecialchars($d['name']) ?></h3>
+            <p><strong>Email:</strong> <?= htmlspecialchars($d['email']) ?></p>
+            <p><strong>Phone:</strong> <?= htmlspecialchars($d['phone'] ?? '-') ?></p>
+            <p><strong>Degree:</strong> <?= htmlspecialchars($d['degree'] ?? '-') ?></p>
+            <p><strong>BMDC:</strong> <?= htmlspecialchars($d['bmdc'] ?? '-') ?></p>
+            <p><strong>NID:</strong> <?= htmlspecialchars($d['nid'] ?? '-') ?></p>
+            <p><strong>Address:</strong> <?= htmlspecialchars($d['address'] ?? '-') ?></p>
+            <p><strong>Chamber:</strong> <?= htmlspecialchars($d['chamber'] ?? '-') ?></p>
+            <p><strong>Available Days:</strong> <?= htmlspecialchars($d['available_days'] ?? '-') ?></p>
+            <p><strong>Description:</strong> <?= htmlspecialchars($d['description'] ?? '-') ?></p>
+            <a href="?delete_user=<?= $d['user_id'] ?>" class="delete-btn" onclick="return confirm('Delete this doctor?')">Delete</a>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="instructions" style="background:#f0f8ff; padding:10px; border-left:4px solid #007BFF; margin-bottom:10px;">
+    <strong>Instructions for Updating User Info:</strong>
+    <ul>
+        <li>Fill in all fields you want to update.</li>
+        <li>Email must be valid and unique.</li>
+        <li>Phone & Emergency must be 10-15 digits.</li>
+        <li>NID must be 10-17 digits.</li>
+        <li>Leave password empty if you don't want to change it.</li>
+        <li>All fields marked required must not be empty.</li>
+        <li>Click the <strong>Update</strong> button to save changes.</li>
+    </ul>
+</div>
     
+<h2>Update User Info</h2>
+<?php if(!empty($success)): ?>
+    <p style="color:green;font-weight:bold;"><?= $success ?></p>
+<?php endif; ?>
+
+<div class="toggle-buttons">
+    <button id="showPatientUsers">Patients</button>
+    <button id="showDoctorUsers">Doctors</button>
+</div>
+
+<div id="patientUsers" class="cards-section">
+    <?php foreach($patients as $p): ?>
+    <div class="card">
+        <form method="POST" >
+            <input type="hidden" name="user_id" value="<?= $p['user_id'] ?>">
+            <input type="text" name="name" value="<?= htmlspecialchars($p['name']) ?>" placeholder="Name">
+            <small style="color:red"><?= $errors['name'] ?? '' ?></small>
+
+            <input type="email" name="email" value="<?= htmlspecialchars($p['email']) ?>" placeholder="Email">
+            <small style="color:red"><?= $errors['email'] ?? '' ?></small>
+
+            <input type="password" name="password" placeholder="New Password (leave empty to keep)">
+            
+            <input type="text" name="phone" value="<?= htmlspecialchars($p['phone']) ?>" placeholder="Phone">
+            <small style="color:red"><?= $errors['phone'] ?? '' ?></small>
+
+            <input type="text" name="address" value="<?= htmlspecialchars($p['address']) ?>" placeholder="Address">
+            <small style="color:red"><?= $errors['address'] ?? '' ?></small>
+
+            <input type="text" name="health_issues" value="<?= htmlspecialchars($p['health_issues']) ?>" placeholder="Health Issues">
+            <small style="color:red"><?= $errors['health_issues'] ?? '' ?></small>
+
+            <input type="text" name="emergency" value="<?= htmlspecialchars($p['emergency']) ?>" placeholder="Emergency Contact">
+            <small style="color:red"><?= $errors['emergency'] ?? '' ?></small>
+
+            <input type="text" name="nid" value="<?= htmlspecialchars($p['nid']) ?>" placeholder="NID">
+            <small style="color:red"><?= $errors['nid'] ?? '' ?></small>
+
+            <button name="update_patient">Update Patient</button>
+        </form>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div id="doctorUsers" class="cards-section" style="display:none;">
+    <?php foreach($doctors as $d): ?>
+    <div class="card">
+        <form method="POST">
+            <input type="hidden" name="user_id" value="<?= $d['user_id'] ?>">
+
+            <input type="text" name="name" value="<?= htmlspecialchars($d['name']) ?>" placeholder="Name">
+            <small style="color:red"><?= $errors['name'] ?? '' ?></small>
+
+            <input type="email" name="email" value="<?= htmlspecialchars($d['email']) ?>" placeholder="Email">
+            <small style="color:red"><?= $errors['email'] ?? '' ?></small>
+
+            <input type="password" name="password" placeholder="New Password (leave empty to keep)">
+
+            <input type="text" name="degree" value="<?= htmlspecialchars($d['degree']) ?>" placeholder="Degree">
+            <small style="color:red"><?= $errors['degree'] ?? '' ?></small>
+
+            <input type="text" name="phone" value="<?= htmlspecialchars($d['phone']) ?>" placeholder="Phone">
+            <small style="color:red"><?= $errors['phone'] ?? '' ?></small>
+
+            <input type="text" name="bmdc" value="<?= htmlspecialchars($d['bmdc']) ?>" placeholder="BMDC">
+            <small style="color:red"><?= $errors['bmdc'] ?? '' ?></small>
+
+            <input type="text" name="nid" value="<?= htmlspecialchars($d['nid']) ?>" placeholder="NID">
+            <small style="color:red"><?= $errors['nid'] ?? '' ?></small>
+
+            <input type="text" name="address" value="<?= htmlspecialchars($d['address']) ?>" placeholder="Address">
+            <small style="color:red"><?= $errors['address'] ?? '' ?></small>
+
+            <input type="text" name="chamber" value="<?= htmlspecialchars($d['chamber']) ?>" placeholder="Chamber">
+            <small style="color:red"><?= $errors['chamber'] ?? '' ?></small>
+
+            <input type="text" name="available_days" value="<?= htmlspecialchars($d['available_days']) ?>" placeholder="Available Days">
+            <small style="color:red"><?= $errors['available_days'] ?? '' ?></small>
+
+            <input type="text" name="available_time" value="<?= htmlspecialchars($d['available_time']) ?>" placeholder="Available Time">
+            <small style="color:red"><?= $errors['available_time'] ?? '' ?></small>
+
+            <select name="is_available">
+                <option value="1" <?= $d['is_available'] ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= !$d['is_available'] ? 'selected' : '' ?>>No</option>
+            </select>
+
+            <input type="text" name="description" value="<?= htmlspecialchars($d['description']) ?>" placeholder="Description">
+            <small style="color:red"><?= $errors['description'] ?? '' ?></small>
+
+            <button name="update_doctor">Update Doctor</button>
+        </form>
+    </div>
+    <?php endforeach; ?>
+</div>
+
+<hr>
+<hr>
+<div class="instructions" style="background:#f9f9e6; padding:10px; border-left:4px solid #ffc107; margin-bottom:10px;">
+    <strong>Instructions for Adding New User:</strong>
+    <ul>
+        <li>Email must be valid and unique.</li>
+        <li>Password is required.</li>
+        <li>Patient fields:</li>
+        <ul>
+            <li>Name and Address are required.</li>
+            <li>Phone & Emergency must be 10-15 digits.</li>
+            <li>NID must be 10-17 digits.</li>
+            <li>Health Issues description is required.</li>
+        </ul>
+        <li>Doctor fields:</li>
+        <ul>
+            <li>Name, Degree, BMDC, Address, Chamber, Available Days & Time, and Description are required.</li>
+            <li>Phone must be 10-15 digits.</li>
+     <div id="doctorUsers" class="cards-section" style="display:none;">
+    <?php foreach($doctors as $d): ?>
+    <div class="card">
+        <form method="POST">
+            <input type="hidden" name="user_id" value="<?= $d['user_id'] ?>">
+
+            <input type="text" name="name" value="<?= htmlspecialchars($d['name']) ?>" placeholder="Name">
+            <small style="color:red"><?= $errors['name'] ?? '' ?></small>
+
+            <input type="email" name="email" value="<?= htmlspecialchars($d['email']) ?>" placeholder="Email">
+            <small style="color:red"><?= $errors['email'] ?? '' ?></small>
+
+            <input type="password" name="password" placeholder="New Password (leave empty to keep)">
+
+            <input type="text" name="degree" value="<?= htmlspecialchars($d['degree']) ?>" placeholder="Degree">
+            <small style="color:red"><?= $errors['degree'] ?? '' ?></small>
+
+            <input type="text" name="phone" value="<?= htmlspecialchars($d['phone']) ?>" placeholder="Phone">
+            <small style="color:red"><?= $errors['phone'] ?? '' ?></small>
+
+            <input type="text" name="bmdc" value="<?= htmlspecialchars($d['bmdc']) ?>" placeholder="BMDC">
+            <small style="color:red"><?= $errors['bmdc'] ?? '' ?></small>
+
+            <input type="text" name="nid" value="<?= htmlspecialchars($d['nid']) ?>" placeholder="NID">
+            <small style="color:red"><?= $errors['nid'] ?? '' ?></small>
+
+            <input type="text" name="address" value="<?= htmlspecialchars($d['address']) ?>" placeholder="Address">
+            <small style="color:red"><?= $errors['address'] ?? '' ?></small>
+
+            <input type="text" name="chamber" value="<?= htmlspecialchars($d['chamber']) ?>" placeholder="Chamber">
+            <small style="color:red"><?= $errors['chamber'] ?? '' ?></small>
+
+            <input type="text" name="available_days" value="<?= htmlspecialchars($d['available_days']) ?>" placeholder="Available Days">
+            <small style="color:red"><?= $errors['available_days'] ?? '' ?></small>
+
+            <input type="text" name="available_time" value="<?= htmlspecialchars($d['available_time']) ?>" placeholder="Available Time">
+            <small style="color:red"><?= $errors['available_time'] ?? '' ?></small>
+
+            <select name="is_available">
+                <option value="1" <?= $d['is_available'] ? 'selected' : '' ?>>Yes</option>
+                <option value="0" <?= !$d['is_available'] ? 'selected' : '' ?>>No</option>
+            </select>
+
+            <input type="text" name="description" value="<?= htmlspecialchars($d['description']) ?>" placeholder="Description">
+            <small style="color:red"><?= $errors['description'] ?? '' ?></small>
+
+            <button name="update_doctor">Update Doctor</button>
+        </form>
+    </div>
+    <?php endforeach; ?>
+</div>
+       <li>NID must be 10-17 digits.</li>
+            <li>Is Available must be Yes or No.</li>
+        </ul>
+        <li>Click <strong>Add</strong> button to save the new user.</li>
+    </ul>
+</div>

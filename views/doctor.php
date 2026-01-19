@@ -38,3 +38,4 @@ $patientCount = count($patients);
             </div>
         </div>
     </nav>
+?>

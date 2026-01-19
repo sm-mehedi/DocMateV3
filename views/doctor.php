@@ -105,3 +105,82 @@ $patientCount = count($patients);
                     </div>
                 </div>
 
+ <div class="form-group">
+                    <label>Available Time</label>
+                    <input type="text" name="time" value="<?= htmlspecialchars($doc['available_time']) ?>" 
+                           placeholder="e.g., 9:00 AM - 5:00 PM" required>
+                    <div class="error" id="time-error"></div>
+                </div>
+
+                <button type="submit" class="btn">Update Schedule</button>
+            </form>
+        </section>
+
+        <!-- Patients Section -->
+        <section id="patients" class="section">
+            <h3> My Patients 
+                <span class="badge badge-success"><?= $patientCount ?> Active</span>
+            </h3>
+
+            <?php if (empty($patients)): ?>
+                <div style="text-align: center; padding: 30px; background: #f8f9fa; border-radius: 6px;">
+                    <p style="color: #6c757d;">No active appointments at the moment.</p>
+                </div>
+            <?php else: ?>
+                <div class="cards" id="patient-cards">
+                    <?php foreach ($patients as $p): ?>
+                        <div class="card <?= ($p['preferred_day'] ?? '') === $today ? 'today' : '' ?>" id="patient-<?= $p['id'] ?>">
+                            <h4>
+                                <?= htmlspecialchars($p['name']) ?>
+                                <?= ($p['preferred_day'] ?? '') === $today ? '<span class="badge badge-success">Today</span>' : '' ?>
+                            </h4>
+                            <p><strong>📞 Phone:</strong> <?= htmlspecialchars($p['phone']) ?></p>
+                            <p><strong>🏠 Address:</strong> <?= htmlspecialchars($p['address']) ?></p>
+                            <p><strong>⚕️ Health Issues:</strong> <?= htmlspecialchars($p['health_issues']) ?></p>
+                            <p><strong>🚨 Emergency:</strong> <?= htmlspecialchars($p['emergency']) ?></p>
+                            <p><strong>📅 Preferred Day:</strong> <?= htmlspecialchars($p['preferred_day'] ?? 'Not selected') ?></p>
+                            <p><strong>🆔 Patient ID:</strong> <?= $p['id'] ?></p>
+
+                            <div class="card-actions">
+                                <button class="btn btn-seen mark-seen-btn" data-patient="<?= $p['id'] ?>">
+                                    ✅ Mark as Seen 
+                                </button>
+                                <button class="btn btn-danger cancel-btn" data-patient="<?= $p['id'] ?>">
+                                    ❌ Cancel Appointment
+                                </button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </section>
+
+        <!-- Profile Update Section -->
+        <section id="profile" class="section">
+            <h3>👤 Update Profile Information</h3>
+            <form id="update-info-form">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" value="<?= htmlspecialchars($doc['phone']) ?>" 
+                           placeholder="Enter phone number" required>
+                    <div class="error" id="phone-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" name="address" value="<?= htmlspecialchars($doc['address']) ?>" 
+                           placeholder="Enter clinic address" required>
+                    <div class="error" id="address-error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Chamber Location</label>
+                    <input type="text" name="chamber" value="<?= htmlspecialchars($doc['chamber']) ?>" 
+                           placeholder="Enter chamber location" required>
+                    <div class="error" id="chamber-error"></div>
+                </div>
+
+                <button type="submit" class="btn">Update Profile</button>
+            </form>
+        </section>
+    </div>

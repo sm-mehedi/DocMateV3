@@ -249,3 +249,47 @@ $(document).ready(function(){
             }
         }, 'json');
     });
+// Update profile info
+    $('#update-info-form').submit(function(e){
+        e.preventDefault();
+
+        const phone = this.phone.value.trim();
+        const address = this.address.value.trim();
+        const chamber = this.chamber.value.trim();
+
+        let valid = true;
+
+        // Clear previous errors
+        $('#phone-error, #address-error, #chamber-error').text('');
+
+        // Validation
+        if(!/^\d{7,11}$/.test(phone)){
+            $('#phone-error').text('Phone must be 7–11 digits only.');
+            this.phone.value = "<?= htmlspecialchars($doc['phone']) ?>";
+            valid = false;
+        }
+
+        if(address.length < 5 || address.length > 100){
+            $('#address-error').text('Address must be 5–100 characters.');
+            this.address.value = "<?= htmlspecialchars($doc['address']) ?>";
+            valid = false;
+        }
+
+        if(chamber.length < 3 || chamber.length > 50){
+            $('#chamber-error').text('Chamber must be 3–50 characters.');
+            this.chamber.value = "<?= htmlspecialchars($doc['chamber']) ?>";
+            valid = false;
+        }
+
+        if(!valid) return;
+
+        const formData = $(this).serialize();
+
+        $.post('../public/update-info.php', formData, function(data){
+            if(data.success){
+                alert('Profile updated successfully!');
+            } else {
+                alert(data.message || 'Update failed');
+            }
+        }, 'json');
+    });

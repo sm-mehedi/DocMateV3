@@ -184,3 +184,46 @@ function validateForm() {
         document.getElementById('daysError').style.display = 'block';
         isValid = false;
     }
+   // Time validation
+    const timeFrom = document.getElementById('time_from').value;
+    const timeTo = document.getElementById('time_to').value;
+    if (!timeFrom || !timeTo) {
+        if (!timeFrom) document.getElementById('timeFromError').style.display = 'block';
+        if (!timeTo) document.getElementById('timeToError').style.display = 'block';
+        isValid = false;
+    } else if (timeFrom >= timeTo) {
+        document.getElementById('timeToError').textContent = 'End time must be after start time';
+        document.getElementById('timeToError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Format time for database
+    if (timeFrom && timeTo) {
+        const formatTime = (timeStr) => {
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        };
+        document.getElementById('available_time').value = 
+            `${formatTime(timeFrom)} - ${formatTime(timeTo)}`;
+    }
+    
+    // Password validation
+    const password = document.getElementById('password');
+    if (password.value.length < 6) {
+        document.getElementById('passwordError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Confirm password
+    const confirmPassword = document.getElementById('confirm_password');
+    if (password.value !== confirmPassword.value) {
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        isValid = false;
+    }
+    
+    return isValid;
+}
+

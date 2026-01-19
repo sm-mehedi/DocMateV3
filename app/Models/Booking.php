@@ -129,3 +129,27 @@ public function deleteByDoctor($patient_id, $doctor_user_id) {
         $q->execute([$patient_id]);
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }
+    
+    public function forDoctor($user_id){
+        $q = $this->conn->prepare(
+            "SELECT p.*, 
+                    b.status, 
+                    b.doctor_cancelled,
+                    b.preferred_day
+             FROM bookings b
+             JOIN patients p ON b.patient_id = p.id
+             JOIN doctors d ON b.doctor_id = d.id
+             WHERE d.user_id = ? AND b.status = 'booked'"
+        );
+        $q->execute([$user_id]);
+        return $q->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function unbookByBookingId($booking_id){
+        $q = $this->conn->prepare(
+            "UPDATE bookings SET status='cancelled', patient_unbooked=1 WHERE id=? AND status='booked'"
+        );
+        return $q->execute([$booking_id]);
+    }
+}
+?>

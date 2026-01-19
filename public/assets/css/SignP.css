@@ -1,0 +1,197 @@
+/* Retro Signup Form CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", Arial, monospace;
+}
+
+body {
+    background: #eaeaea;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    color: #222;
+}
+
+/* Signup Container */
+.signup-container {
+    background: #fdfdfd;
+    padding: 30px;
+    border: 2px solid #000;
+    border-radius: 6px;
+}
+
+/* Heading */
+h2 {
+    color: #111;
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+}
+
+/* Messages */
+.error-message {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+    border: 2px solid #000;
+}
+
+.success-message {
+    color: #155724;
+    background: #d4edda;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+    border: 2px solid #000;
+}
+
+.field-error {
+    color: #721c24;
+    font-size: 12px;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #111;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fdfdfd;
+}
+
+input.error-field, textarea.error-field {
+    border-color: #721c24;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+}
+
+/* Checkbox Sections */
+.checkbox-section {
+    margin: 15px 0;
+    padding: 15px;
+    background: #fdfdfd;
+    border-radius: 4px;
+    border: 2px solid #000;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+/* Condition Categories */
+.condition-category {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #000;
+}
+
+.condition-category h4 {
+    margin: 0 0 8px 0;
+    color: #111;
+    font-size: 14px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #27ae60;
+    color: white;
+    border: 2px solid #000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #2ecc71;
+}
+
+/* Back Link */
+.back-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.back-link a {
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+/* Required Field Indicator */
+.required::after {
+    content: " *";
+    color: #721c24;
+}
+
+/* Form Rows */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Other Conditions Textarea */
+.other-conditions {
+    margin-top: 15px;
+}
+
+.other-conditions textarea {
+    min-height: 60px;
+    resize: vertical;
+}

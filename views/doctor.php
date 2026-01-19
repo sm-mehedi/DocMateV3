@@ -349,3 +349,42 @@ $(document).ready(function(){
         $('.stat-card:first-child .stat-number').text(count);
         $('.stat-card:nth-child(2) .stat-number').text(count);
     }
+    
+ // Smooth scrolling
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+
+    // Scroll to top
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Show scroll to top button
+    window.addEventListener('scroll', function() {
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        if (window.scrollY > 300) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    });
+});
+</script>
+</body>
+</html>

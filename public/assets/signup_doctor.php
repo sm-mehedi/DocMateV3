@@ -226,4 +226,31 @@ function validateForm() {
     
     return isValid;
 }
-
+// Real-time validation
+document.addEventListener('DOMContentLoaded', function() {
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 0 && !value.startsWith('01')) {
+            value = '01' + value.substring(2);
+        }
+        if (value.length > 11) value = value.substring(0, 11);
+        e.target.value = value;
+    });
+    
+    // Time formatting
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    timeInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            const fromTime = document.getElementById('time_from').value;
+            const toTime = document.getElementById('time_to').value;
+            if (fromTime && toTime && fromTime >= toTime) {
+                document.getElementById('timeToError').textContent = 'End time must be after start time';
+                document.getElementById('timeToError').style.display = 'block';
+            } else {
+                document.getElementById('timeToError').style.display = 'none';
+            }
+        });
+    });
+    

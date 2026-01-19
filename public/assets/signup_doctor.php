@@ -162,3 +162,25 @@ function validateForm() {
         document.getElementById('emailError').style.display = 'block';
         isValid = false;
     }
+ // Phone validation (Bangladeshi format)
+    const phone = document.getElementById('phone');
+    const phoneRegex = /^01[3-9]\d{8}$/;
+    if (!phoneRegex.test(phone.value)) {
+        document.getElementById('phoneError').textContent = 'Please enter a valid Bangladeshi phone number (01XXXXXXXXX)';
+        document.getElementById('phoneError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Degree validation
+    const degrees = document.querySelectorAll('input[name="degree[]"]:checked');
+    if (degrees.length === 0) {
+        document.getElementById('degreeError').style.display = 'block';
+        isValid = false;
+    }
+    
+    // Days validation
+    const days = document.querySelectorAll('input[name="days[]"]:checked');
+    if (days.length === 0) {
+        document.getElementById('daysError').style.display = 'block';
+        isValid = false;
+    }

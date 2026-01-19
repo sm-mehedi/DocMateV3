@@ -99,6 +99,93 @@ $activeBookings = array_column(
     </div>
 <?php endif; ?>
 </div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>© <?= date('Y') ?> DocMate - Patient Portal</p>
+        <p><?= htmlspecialchars($patient['name']) ?> | Member Since: <?= date('F Y') ?></p>
+        <p style="font-size: 12px; margin-top: 10px; color: #bdc3c7;">
+        </p>
+    </div>
+</footer>
+
+<script>
+function unbookDoctor(bookingId){
+    if(!confirm("Are you sure you want to cancel this appointment?")) {
+        return;
+    }
+    
+    fetch("../public/unbook.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ booking_id: bookingId })
+    }).then(r => r.json()).then(res => {
+        if(res.success){
+            alert("Appointment cancelled successfully!");
+            location.reload();
+        } else {
+            alert("Failed to cancel appointment: " + (res.message ?? "Unknown error"));
+        }
+    });
+}
+
+function removeBookingCard(bookingId) {
+    if(!confirm("Are you sure you want to permanently delete this cancelled appointment? This action cannot be undone.")) {
+        return;
+    }
+    
+    // Hide the card immediately
+    const card = document.getElementById('booking-card-' + bookingId);
+    if(card) {
+        card.style.display = 'none';
+    }
+    
+    // Permanently delete from database
+    fetch("../public/remove_booking.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ booking_id: bookingId })
+    }).then(r => r.json()).then(res => {
+        if(res.success){
+            // Optionally show a success message
+            console.log("Booking deleted successfully");
+            // If you want to remove the card completely from DOM:
+            if(card) {
+                card.remove();
+            }
+        } else {
+            // Show error and restore the card
+            alert("Failed to delete booking: " + (res.message ?? "Unknown error"));
+            if(card) {
+                card.style.display = 'block';
+            }
+        }
+    });
+}
+
+function removeBookingCard(bookingId) {
+    if(!confirm("Are you sure you want to remove this cancelled appointment from your view?")) {
+        return;
+    }
+    
+    // Hide the card immediately
+    const card = document.getElementById('booking-card-' + bookingId);
+    if(card) {
+        card.style.display = 'none';
+    }
+    
+    // Optional: Send request to mark as hidden in database
+    fetch("../public/remove_booking.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ booking_id: bookingId })
+    }).then(r => r.json()).then(res => {
+        if(!res.success) {
+            console.error("Failed to update database:", res.message);
+        }
+    });
+}
+</script>
 </body>
 </html>
 

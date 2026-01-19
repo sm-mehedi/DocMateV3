@@ -107,4 +107,58 @@ if($_POST){
             </div>
             <div class="validation-error" id="degreeError">Please select at least one degree</div>
         </div>
+     <!-- Hidden field for formatted time -->
+        <input type="hidden" name="available_time" id="available_time">
+
+        <!-- Professional Description -->
+        <div class="form-group">
+            <label>Professional Description</label>
+            <textarea name="desc" id="desc" placeholder="Brief description of your expertise, specialization, and experience..."></textarea>
+        </div>
+
+        <!-- Security -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="required">Password</label>
+                <input type="password" name="password" id="password" required minlength="6">
+                <div class="validation-error" id="passwordError">Password must be at least 6 characters</div>
+            </div>
+            <div class="form-group">
+                <label class="required">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" required>
+                <div class="validation-error" id="confirmPasswordError">Passwords do not match</div>
+            </div>
+        </div>
+
+        <button type="submit">Register as Doctor</button>
+    </form>
+
+    <div class="back-link">
+        <a href="login.php">← Back to Login</a>
+    </div>
+</div>
+
+<script>
+function validateForm() {
+    let isValid = true;
     
+    // Clear previous errors
+    document.querySelectorAll('.validation-error').forEach(el => el.style.display = 'none');
+    
+    // Required fields validation
+    const requiredFields = ['name', 'email', 'phone', 'bmdc', 'nid', 'address', 'chamber', 'password', 'confirm_password'];
+    requiredFields.forEach(field => {
+        const element = document.getElementById(field);
+        if (!element.value.trim()) {
+            document.getElementById(field + 'Error').style.display = 'block';
+            isValid = false;
+        }
+    });
+    
+    // Email validation
+    const email = document.getElementById('email');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.value)) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+    }

@@ -12,3 +12,10 @@ if(!$patient_id) {
 }
 
 $bookingModel = new Booking($conn);
+// DELETE the booking
+$res = $bookingModel->deleteByDoctor($patient_id, $_SESSION['user_id']);
+
+echo json_encode([
+    'success' => $res,
+    'message' => $res ? 'Patient marked as seen and booking deleted' : 'Failed to delete booking'
+]);

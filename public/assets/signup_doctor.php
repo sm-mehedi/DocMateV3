@@ -253,4 +253,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+   // Password match validation
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
     
+    [password, confirmPassword].forEach(input => {
+        input.addEventListener('input', function() {
+            if (password.value && confirmPassword.value) {
+                if (password.value !== confirmPassword.value) {
+                    document.getElementById('confirmPasswordError').style.display = 'block';
+                } else {
+                    document.getElementById('confirmPasswordError').style.display = 'none';
+                }
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>  

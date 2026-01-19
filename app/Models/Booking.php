@@ -107,3 +107,25 @@ public function deleteByDoctor($patient_id, $doctor_user_id) {
         $q->execute([$patient_id]);
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }
+ public function myAllBookingsWithCancelInfo($patient_id){
+        $q = $this->conn->prepare(
+            "SELECT d.*, 
+                    b.status, 
+                    b.doctor_cancelled, 
+                    b.patient_unbooked,
+                    b.preferred_day,
+                    b.id AS booking_id
+             FROM bookings b
+             JOIN doctors d ON b.doctor_id = d.id
+             WHERE b.patient_id = ? 
+             ORDER BY 
+               CASE b.status 
+                 WHEN 'booked' THEN 1
+                 WHEN 'cancelled' THEN 2
+                 ELSE 3
+               END,
+               b.id DESC"
+        );
+        $q->execute([$patient_id]);
+        return $q->fetchAll(PDO::FETCH_ASSOC);
+    }

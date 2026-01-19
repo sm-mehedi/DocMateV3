@@ -184,3 +184,68 @@ $patientCount = count($patients);
             </form>
         </section>
     </div>
+
+      <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© <?= date('Y') ?> DocMate - Doctor Portal</p>
+            <p>Dr. <?= htmlspecialchars($doc['name']) ?> | BMDC: <?= htmlspecialchars($doc['bmdc'] ?? 'N/A') ?></p>
+        </div>
+    </footer>
+
+<script>
+$(document).ready(function(){
+    // Toggle availability
+    $('#toggle-availability').click(function(){
+        const btn = $(this);
+        btn.prop('disabled', true);
+
+        $.post('../public/toggle-availability.php', {}, function(data){
+            if(data.success){
+                $('#availability-status')
+                    .text(data.is_available ? '🟢 Available' : '🔴 Offline')
+                    .toggleClass('status-available status-unavailable');
+
+                btn.text(data.is_available ? 'Go Offline' : 'Go Online')
+                   .toggleClass('btn-warning btn-success');
+                
+                document.querySelector('.availability-status').textContent = 
+                    data.is_available ? 'Available' : 'Offline';
+                document.querySelector('.availability-status').className = 
+                    'availability-status ' + (data.is_available ? 'status-available' : 'status-unavailable');
+                
+                alert('Availability status updated!');
+            } else {
+                alert(data.message || 'Error toggling availability');
+            }
+        }, 'json').always(() => btn.prop('disabled', false));
+    });
+
+    // Update availability schedule
+    $('#update-availability-form').submit(function(e){
+        e.preventDefault();
+
+        const timeInput = $(this).find('input[name="time"]');
+        const time = timeInput.val().trim();
+        const originalTime = "<?= htmlspecialchars($doc['available_time']) ?>";
+
+        $('#time-error').text('');
+
+        if(time.length < 5 || time.length > 50){
+            $('#time-error').text('Time must be 5–50 characters.');
+            timeInput.val(originalTime);
+            return;
+        }
+
+        const formData = $(this).serialize();
+
+        $.post('../public/update-availability.php', formData, function(data){
+            if(data.success){
+                $('input[name="time"]').val(data.time);
+                alert('Schedule updated successfully!');
+            } else {
+                $('#time-error').text(data.message || 'Update failed.');
+                $('input[name="time"]').val(originalTime);
+            }
+        }, 'json');
+    });

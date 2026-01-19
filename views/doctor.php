@@ -38,4 +38,33 @@ $patientCount = count($patients);
             </div>
         </div>
     </nav>
-?>
+
+<div class="scroll-top" onclick="scrollToTop()">↑</div>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <section id="welcome" class="section">
+            <h2>Welcome, Dr. <?= htmlspecialchars($doc['name']) ?>!</h2>
+            <p>Specialization: <?= htmlspecialchars($doc['degree']) ?></p>
+            <p>BMDC: <?= htmlspecialchars($doc['bmdc'] ?? 'N/A') ?></p>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number"><?= $patientCount ?></div>
+                    <div class="stat-label">Active Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number"><?= $patientCount ?></div>
+                    <div class="stat-label">Total Appointments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">
+                        <span class="availability-status <?= $doc['is_available'] ? 'status-available' : 'status-unavailable' ?>">
+                            <?= $doc['is_available'] ? 'Available' : 'Offline' ?>
+                        </span>
+                    </div>
+                    <div class="stat-label">Current Status</div>
+                </div>
+            </div>
+        </section>
+

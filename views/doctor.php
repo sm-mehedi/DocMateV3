@@ -67,4 +67,41 @@ $patientCount = count($patients);
                 </div>
             </div>
         </section>
+ <!-- Availability Management -->
+        <section id="availability" class="section">
+            <h3>📅 Availability Management</h3>
+            
+            <div class="form-group">
+                <label>Current Status:</label>
+                <div>
+                    <span class="availability-status <?= $doc['is_available'] ? 'status-available' : 'status-unavailable' ?>" id="availability-status">
+                        <?= $doc['is_available'] ? '🟢 Available' : '🔴 Offline' ?>
+                    </span>
+                    <button id="toggle-availability" class="btn <?= $doc['is_available'] ? 'btn-warning' : 'btn-success' ?>">
+                        <?= $doc['is_available'] ? 'Go Offline' : 'Go Online' ?>
+                    </button>
+                </div>
+            </div>
+
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #dee2e6;">
+
+            <h4>Update Schedule</h4>
+            <form id="update-availability-form">
+                <div class="form-group">
+                    <label>Available Days</label>
+                    <div class="checkbox-group">
+                        <?php
+                        $days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                        $selected = explode(',', $doc['available_days']);
+                        foreach ($days as $d):
+                            $highlight = ($d === $today) ? 'today-checkbox' : '';
+                        ?>
+                            <label class="<?= $highlight ?>">
+                                <input type="checkbox" name="days[]" value="<?= $d ?>"
+                                    <?= in_array($d, $selected) ? 'checked' : '' ?>>
+                                <?= $d ?>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
 

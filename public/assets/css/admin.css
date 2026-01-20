@@ -1,0 +1,225 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Courier New", Arial, monospace;
+}
+
+body {
+    background: #eaeaea;
+    color: #111;
+}
+
+/* Containers */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    text-align: center;
+    margin: 10px 0;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
+}
+
+/* Navbar */
+.navbar {
+    background: #111;
+    color: white;
+    padding: 10px;
+    border-bottom: 2px solid #000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-top: 2px solid #000;
+    margin-top: 20px;
+}
+
+/* Count Boxes */
+.counts {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.count-box {
+    border: 2px solid #000;
+    padding: 10px 15px;
+    background: #fff;
+    font-weight: bold;
+}
+
+/* Cards */
+.cards, .cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card, .user-card, .update-form-card {
+    border: 2px solid #000;
+    padding: 10px;
+    background: #fff;
+    width: 300px;
+}
+
+.card h3, .user-card h3 {
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+}
+
+.card p, .user-card p {
+    font-size: 13px;
+}
+
+/* Buttons */
+button, .btn, .delete-btn, .logout-btn, .action-btn {
+    border: 2px solid #000;
+    background: #ddd;
+    color: #000;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+button:hover, .btn:hover, .delete-btn:hover {
+    background: #bbb;
+}
+
+.btn-danger {
+    background: #ffcccc;
+}
+
+.btn-success {
+    background: #ccffcc;
+}
+
+.btn-warning {
+    background: #fff0b3;
+}
+
+/* Toggle Buttons */
+.toggle-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: white;
+    font-size: 13px;
+}
+
+table th, table td {
+    border: 1px solid #000;
+    padding: 8px;
+}
+
+table th {
+    background: #ddd;
+}
+
+/* Forms & Inputs */
+input, select, textarea {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #000;
+    font-family: inherit;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.form-grid.full-width {
+    grid-template-columns: 1fr;
+}
+
+/* Status Labels */
+.status {
+    border: 1px solid #000;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.status-booked { background: #ccffcc; }
+.status-cancelled { background: #ffcccc; }
+.status-completed { background: #cce5ff; }
+.status-pending { background: #fff0b3; }
+
+/* Messages */
+.success, .error {
+    border: 2px solid #000;
+    padding: 10px;
+    max-width: 600px;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.success { background: #ccffcc; }
+.error { background: #ffcccc; }
+
+/* Sections */
+.section {
+    padding-top: 60px;
+    margin-top: -60px;
+}
+
+/* Users Grid */
+.users-grid, .update-forms-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Small Screen */
+@media (max-width: 700px) {
+    .users-grid, .update-forms-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}

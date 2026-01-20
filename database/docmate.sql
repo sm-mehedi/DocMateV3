@@ -114,14 +114,11 @@ UPDATE doctors SET available_time='3:00 PM - 7:00 PM' WHERE id=10;
 
 ALTER TABLE doctors
 ADD is_available TINYINT(1) DEFAULT 1 AFTER available_time;
-ALTER TABLE bookings 
-ADD COLUMN doctor_cancelled TINYINT(1) DEFAULT 0;
-
-ALTER TABLE bookings
-ADD COLUMN doctor_cancelled TINYINT(1) NOT NULL DEFAULT 0;
-
-ALTER TABLE bookings 
-ADD preferred_day VARCHAR(20) NULL;
-
-ALTER TABLE bookings 
-ADD COLUMN is_seen TINYINT(1) DEFAULT 0;
+CREATE TABLE community_chat (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    user_type ENUM('patient','doctor','admin') NOT NULL,
+    topic VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

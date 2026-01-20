@@ -4,12 +4,101 @@ require "../app/core/auth.php";
 require "../app/models/Doctor.php";
 require "../app/models/Booking.php";
 
+// Only doctors can access
+if(!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'doctor'){
+    header("Location: ../public/login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
 $doctorModel = new Doctor($conn);
 $booking = new Booking($conn);
 
-$doc = $doctorModel->getByUser($_SESSION['user_id']);
+$doc = $doctorModel->getByUser($user_id);
 
-$patients = $booking->forDoctor($_SESSION['user_id']);
+// Get doctor's full info with email
+$stmt = $conn->prepare("SELECT d.*, u.email FROM doctors d JOIN users u ON d.user_id = u.id WHERE d.user_id = ?");
+$stmt->execute([$user_id]);
+$doctor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Initialize messages
+$profileSuccess = '';
+$profileError = '';
+
+// Handle Doctor Profile Update
+if(isset($_POST['update_doctor_profile'])){
+    $name = trim($_POST['name']);
+    $degree = trim($_POST['degree']);
+    $phone = trim($_POST['phone']);
+    $bmdc = trim($_POST['bmdc']);
+    $nid = trim($_POST['nid']);
+    $address = trim($_POST['address']);
+    $chamber = trim($_POST['chamber']);
+    $available_days = trim($_POST['available_days']);
+    $available_time = trim($_POST['available_time']);
+    $description = trim($_POST['description']);
+    $new_password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm_password']);
+    
+    $profileErrors = [];
+    
+    // Validate fields
+    if(!$name) $profileErrors['name'] = "Name is required!";
+    if(!$degree) $profileErrors['degree'] = "Degree is required!";
+    if(!preg_match('/^\d{10,15}$/', $phone)) $profileErrors['phone'] = "Phone must be 10-15 digits!";
+    if(!$bmdc) $profileErrors['bmdc'] = "BMDC is required!";
+    if(!$nid || !preg_match('/^\d{10,17}$/', $nid)) $profileErrors['nid'] = "NID must be 10-17 digits!";
+    if(!$address) $profileErrors['address'] = "Address is required!";
+    if(!$chamber) $profileErrors['chamber'] = "Chamber is required!";
+    if(!$available_days) $profileErrors['available_days'] = "Available days required!";
+    if(!$available_time) $profileErrors['available_time'] = "Available time required!";
+    if(!$description) $profileErrors['description'] = "Description is required!";
+    
+    // Validate passwords if provided
+    if(!empty($new_password)) {
+        if(strlen($new_password) < 6) {
+            $profileErrors['password'] = "Password must be at least 6 characters!";
+        }
+        if($new_password !== $confirm_password) {
+            $profileErrors['confirm_password'] = "Passwords do not match!";
+        }
+    }
+    
+    if(empty($profileErrors)){
+        try {
+            // Update doctor info
+            $stmt = $conn->prepare("UPDATE doctors SET name = ?, degree = ?, phone = ?, bmdc = ?, nid = ?, address = ?, chamber = ?, available_days = ?, available_time = ?, description = ? WHERE user_id = ?");
+            $stmt->execute([$name, $degree, $phone, $bmdc, $nid, $address, $chamber, $available_days, $available_time, $description, $user_id]);
+            
+            // Update password if provided
+            if(!empty($new_password)) {
+                $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
+                $stmt->execute([$new_password, $user_id]);
+            }
+            
+            // Update local doctor info
+            $doctor['name'] = $name;
+            $doctor['degree'] = $degree;
+            $doctor['phone'] = $phone;
+            $doctor['bmdc'] = $bmdc;
+            $doctor['nid'] = $nid;
+            $doctor['address'] = $address;
+            $doctor['chamber'] = $chamber;
+            $doctor['available_days'] = $available_days;
+            $doctor['available_time'] = $available_time;
+            $doctor['description'] = $description;
+            
+            $profileSuccess = "Profile updated successfully!";
+        } catch (Exception $e) {
+            $profileError = "Error updating profile: " . $e->getMessage();
+        }
+    } else {
+        $profileError = implode(" ", array_values($profileErrors));
+    }
+}
+
+$patients = $booking->forDoctor($user_id);
 
 $today = date('D'); 
 
@@ -21,7 +110,6 @@ $patientCount = count($patients);
     <title>Doctor Dashboard</title>
     <link rel="stylesheet" href="../public/assets/css/doctor.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    
 </head>
 <body>
     <nav class="navbar">
@@ -39,14 +127,32 @@ $patientCount = count($patients);
         </div>
     </nav>
 
-<div class="scroll-top" onclick="scrollToTop()">↑</div>
+    <div class="scroll-top" onclick="scrollToTop()">↑</div>
 
     <div class="container">
         <!-- Welcome Section -->
         <section id="welcome" class="section">
-            <h2>Welcome, Dr. <?= htmlspecialchars($doc['name']) ?>!</h2>
-            <p>Specialization: <?= htmlspecialchars($doc['degree']) ?></p>
-            <p>BMDC: <?= htmlspecialchars($doc['bmdc'] ?? 'N/A') ?></p>
+            <div class="welcome-message" style="background: #fdfdfd; border: 2px solid #000; padding: 20px; margin-bottom: 20px; text-align: center;">
+                <h2>Welcome, Dr. <?= htmlspecialchars($doctor['name']) ?>!</h2>
+                <p>Specialization: <?= htmlspecialchars($doctor['degree']) ?></p>
+                <p>Email: <?= htmlspecialchars($doctor['email']) ?></p>
+                <p>BMDC: <?= htmlspecialchars($doctor['bmdc'] ?? 'N/A') ?></p>
+                
+                <div class="doctor-quick-info" style="margin-top: 15px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+                    <div style="border: 1px solid #000; padding: 10px; background: #fff;">
+                        <strong>Phone:</strong> <?= htmlspecialchars($doctor['phone']) ?>
+                    </div>
+                    <div style="border: 1px solid #000; padding: 10px; background: #fff;">
+                        <strong>Active Patients:</strong> <?= $patientCount ?>
+                    </div>
+                    <div style="border: 1px solid #000; padding: 10px; background: #fff;">
+                        <strong>Status:</strong> 
+                        <span class="availability-status <?= $doctor['is_available'] ? 'status-available' : 'status-unavailable' ?>">
+                            <?= $doctor['is_available'] ? 'Available' : 'Offline' ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
             
             <div class="stats-container">
                 <div class="stat-card">
@@ -59,26 +165,27 @@ $patientCount = count($patients);
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">
-                        <span class="availability-status <?= $doc['is_available'] ? 'status-available' : 'status-unavailable' ?>">
-                            <?= $doc['is_available'] ? 'Available' : 'Offline' ?>
+                        <span class="availability-status <?= $doctor['is_available'] ? 'status-available' : 'status-unavailable' ?>">
+                            <?= $doctor['is_available'] ? 'Available' : 'Offline' ?>
                         </span>
                     </div>
                     <div class="stat-label">Current Status</div>
                 </div>
             </div>
         </section>
- <!-- Availability Management -->
+
+        <!-- Availability Management -->
         <section id="availability" class="section">
             <h3>📅 Availability Management</h3>
             
             <div class="form-group">
                 <label>Current Status:</label>
                 <div>
-                    <span class="availability-status <?= $doc['is_available'] ? 'status-available' : 'status-unavailable' ?>" id="availability-status">
-                        <?= $doc['is_available'] ? '🟢 Available' : '🔴 Offline' ?>
+                    <span class="availability-status <?= $doctor['is_available'] ? 'status-available' : 'status-unavailable' ?>" id="availability-status">
+                        <?= $doctor['is_available'] ? '🟢 Available' : '🔴 Offline' ?>
                     </span>
-                    <button id="toggle-availability" class="btn <?= $doc['is_available'] ? 'btn-warning' : 'btn-success' ?>">
-                        <?= $doc['is_available'] ? 'Go Offline' : 'Go Online' ?>
+                    <button id="toggle-availability" class="btn <?= $doctor['is_available'] ? 'btn-warning' : 'btn-success' ?>">
+                        <?= $doctor['is_available'] ? 'Go Offline' : 'Go Online' ?>
                     </button>
                 </div>
             </div>
@@ -92,7 +199,7 @@ $patientCount = count($patients);
                     <div class="checkbox-group">
                         <?php
                         $days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-                        $selected = explode(',', $doc['available_days']);
+                        $selected = explode(',', $doctor['available_days']);
                         foreach ($days as $d):
                             $highlight = ($d === $today) ? 'today-checkbox' : '';
                         ?>
@@ -105,9 +212,9 @@ $patientCount = count($patients);
                     </div>
                 </div>
 
- <div class="form-group">
+                <div class="form-group">
                     <label>Available Time</label>
-                    <input type="text" name="time" value="<?= htmlspecialchars($doc['available_time']) ?>" 
+                    <input type="text" name="time" value="<?= htmlspecialchars($doctor['available_time']) ?>" 
                            placeholder="e.g., 9:00 AM - 5:00 PM" required>
                     <div class="error" id="time-error"></div>
                 </div>
@@ -157,39 +264,107 @@ $patientCount = count($patients);
 
         <!-- Profile Update Section -->
         <section id="profile" class="section">
-            <h3>👤 Update Profile Information</h3>
-            <form id="update-info-form">
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" name="phone" value="<?= htmlspecialchars($doc['phone']) ?>" 
-                           placeholder="Enter phone number" required>
-                    <div class="error" id="phone-error"></div>
-                </div>
+            <h3 style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px;">👤 Update Profile Information</h3>
 
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" name="address" value="<?= htmlspecialchars($doc['address']) ?>" 
-                           placeholder="Enter clinic address" required>
-                    <div class="error" id="address-error"></div>
+            <?php if($profileSuccess): ?>
+                <div style="background: #d4edda; color: #155724; border: 2px solid #000; padding: 10px; margin: 15px auto; max-width: 600px; text-align: center;">
+                    <?= $profileSuccess ?>
                 </div>
+            <?php endif; ?>
 
-                <div class="form-group">
-                    <label>Chamber Location</label>
-                    <input type="text" name="chamber" value="<?= htmlspecialchars($doc['chamber']) ?>" 
-                           placeholder="Enter chamber location" required>
-                    <div class="error" id="chamber-error"></div>
+            <?php if($profileError): ?>
+                <div style="background: #f8d7da; color: #721c24; border: 2px solid #000; padding: 10px; margin: 15px auto; max-width: 600px; text-align: center;">
+                    <?= $profileError ?>
                 </div>
+            <?php endif; ?>
 
-                <button type="submit" class="btn">Update Profile</button>
-            </form>
+            <div class="profile-form-container" style="max-width: 800px; margin: 0 auto;">
+                <div style="background: #fdfdfd; border: 2px solid #000; padding: 25px; border-radius: 0;">
+                    <form method="POST">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
+                                <input type="text" name="name" value="<?= htmlspecialchars($doctor['name']) ?>" placeholder="Full Name" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Degree/Specialization *</label>
+                                <input type="text" name="degree" value="<?= htmlspecialchars($doctor['degree']) ?>" placeholder="MBBS, MD, etc." required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
+                                <input type="text" name="phone" value="<?= htmlspecialchars($doctor['phone']) ?>" placeholder="10-15 digits" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">BMDC Registration *</label>
+                                <input type="text" name="bmdc" value="<?= htmlspecialchars($doctor['bmdc']) ?>" placeholder="BMDC Number" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">NID *</label>
+                                <input type="text" name="nid" value="<?= htmlspecialchars($doctor['nid']) ?>" placeholder="10-17 digits" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Address *</label>
+                                <input type="text" name="address" value="<?= htmlspecialchars($doctor['address']) ?>" placeholder="Clinic Address" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Chamber Location *</label>
+                                <input type="text" name="chamber" value="<?= htmlspecialchars($doctor['chamber']) ?>" placeholder="Chamber Details" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Available Days *</label>
+                                <input type="text" name="available_days" value="<?= htmlspecialchars($doctor['available_days']) ?>" placeholder="Mon,Tue,Wed,Thu,Fri" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                                <small style="color: #666;">Comma separated days</small>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Available Time *</label>
+                                <input type="text" name="available_time" value="<?= htmlspecialchars($doctor['available_time']) ?>" placeholder="9:00 AM - 5:00 PM" required 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Professional Description *</label>
+                                <textarea name="description" placeholder="Describe your expertise, experience, etc." required 
+                                          style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit; min-height: 100px;"><?= htmlspecialchars($doctor['description']) ?></textarea>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">New Password (Optional)</label>
+                                <input type="password" name="password" placeholder="Leave empty to keep current" 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Confirm Password</label>
+                                <input type="password" name="confirm_password" placeholder="Confirm new password" 
+                                       style="width: 100%; padding: 8px; border: 1px solid #000; font-family: inherit;">
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 20px;">
+                            <button type="submit" name="update_doctor_profile" 
+                                    style="padding: 10px 30px; background: #fff; border: 2px solid #000; font-weight: bold; cursor: pointer; font-family: inherit;">
+                                Update Profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </section>
     </div>
 
-      <!-- Footer -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <p>© <?= date('Y') ?> DocMate - Doctor Portal</p>
-            <p>Dr. <?= htmlspecialchars($doc['name']) ?> | BMDC: <?= htmlspecialchars($doc['bmdc'] ?? 'N/A') ?></p>
+            <p>Dr. <?= htmlspecialchars($doctor['name']) ?> | BMDC: <?= htmlspecialchars($doctor['bmdc'] ?? 'N/A') ?></p>
+            <p style="font-size: 12px; margin-top: 10px; color: #bdc3c7;">
+                Logged in as: <?= htmlspecialchars($doctor['email']) ?>
+            </p>
         </div>
     </footer>
 
@@ -227,7 +402,7 @@ $(document).ready(function(){
 
         const timeInput = $(this).find('input[name="time"]');
         const time = timeInput.val().trim();
-        const originalTime = "<?= htmlspecialchars($doc['available_time']) ?>";
+        const originalTime = "<?= htmlspecialchars($doctor['available_time']) ?>";
 
         $('#time-error').text('');
 
@@ -249,52 +424,8 @@ $(document).ready(function(){
             }
         }, 'json');
     });
-// Update profile info
-    $('#update-info-form').submit(function(e){
-        e.preventDefault();
 
-        const phone = this.phone.value.trim();
-        const address = this.address.value.trim();
-        const chamber = this.chamber.value.trim();
-
-        let valid = true;
-
-        // Clear previous errors
-        $('#phone-error, #address-error, #chamber-error').text('');
-
-        // Validation
-        if(!/^\d{7,11}$/.test(phone)){
-            $('#phone-error').text('Phone must be 7–11 digits only.');
-            this.phone.value = "<?= htmlspecialchars($doc['phone']) ?>";
-            valid = false;
-        }
-
-        if(address.length < 5 || address.length > 100){
-            $('#address-error').text('Address must be 5–100 characters.');
-            this.address.value = "<?= htmlspecialchars($doc['address']) ?>";
-            valid = false;
-        }
-
-        if(chamber.length < 3 || chamber.length > 50){
-            $('#chamber-error').text('Chamber must be 3–50 characters.');
-            this.chamber.value = "<?= htmlspecialchars($doc['chamber']) ?>";
-            valid = false;
-        }
-
-        if(!valid) return;
-
-        const formData = $(this).serialize();
-
-        $.post('../public/update-info.php', formData, function(data){
-            if(data.success){
-                alert('Profile updated successfully!');
-            } else {
-                alert(data.message || 'Update failed');
-            }
-        }, 'json');
-    });
-
-   // Cancel appointment
+    // Cancel appointment
     $('.cancel-btn').click(function(){
         if(!confirm('Are you sure you want to cancel this appointment?\n\nThe patient will be notified.')) return;
 
@@ -349,8 +480,8 @@ $(document).ready(function(){
         $('.stat-card:first-child .stat-number').text(count);
         $('.stat-card:nth-child(2) .stat-number').text(count);
     }
-    
- // Smooth scrolling
+
+    // Smooth scrolling
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function(e) {
             if(this.getAttribute('href').startsWith('#')) {

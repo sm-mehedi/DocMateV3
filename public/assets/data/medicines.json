@@ -1,49 +1,261 @@
 [
-    {"name":"Paracetamol","type":"Tablet","for":"Fever,Pain","brand":"Acme"},
-    {"name":"Ibuprofen","type":"Tablet","for":"Inflammation,Pain","brand":"MediCorp"},
-    {"name":"Cetirizine","type":"Syrup","for":"Allergy","brand":"AllerFree"},
-    {"name":"Amoxicillin","type":"Capsule","for":"Infection","brand":"BioPharm"},
-    {"name":"Azithromycin","type":"Tablet","for":"Infection","brand":"Zitromax"},
-    {"name":"Omeprazole","type":"Capsule","for":"Acid Reflux","brand":"StomaCare"},
-    {"name":"Metformin","type":"Tablet","for":"Diabetes","brand":"GlucoSafe"},
-    {"name":"Amlodipine","type":"Tablet","for":"Hypertension","brand":"CardioMax"},
-    {"name":"Losartan","type":"Tablet","for":"Hypertension","brand":"AngioPro"},
-    {"name":"Atorvastatin","type":"Tablet","for":"Cholesterol","brand":"CholesClean"},
-    {"name":"Salbutamol","type":"Inhaler","for":"Asthma","brand":"BreatheWell"},
-    {"name":"Prednisone","type":"Tablet","for":"Inflammation","brand":"SteroidCare"},
-    {"name":"Levothyroxine","type":"Tablet","for":"Thyroid","brand":"ThyroEase"},
-    {"name":"Hydrochlorothiazide","type":"Tablet","for":"Fluid Retention","brand":"Diurex"},
-    {"name":"Warfarin","type":"Tablet","for":"Blood Clot","brand":"Anticoag"},
-    {"name":"Insulin","type":"Injection","for":"Diabetes","brand":"InsuLife"},
-    {"name":"Captopril","type":"Tablet","for":"Hypertension","brand":"AngioRelief"},
-    {"name":"Clopidogrel","type":"Tablet","for":"Heart","brand":"PlateletCare"},
-    {"name":"Furosemide","type":"Tablet","for":"Edema","brand":"WaterClear"},
-    {"name":"Diazepam","type":"Tablet","for":"Anxiety","brand":"CalmWell"},
-    {"name":"Tramadol","type":"Tablet","for":"Pain","brand":"PainFree"},
-    {"name":"Morphine","type":"Injection","for":"Severe Pain","brand":"OpioidRelief"},
-    {"name":"Loratadine","type":"Tablet","for":"Allergy","brand":"AllerEasy"},
-    {"name":"Doxycycline","type":"Capsule","for":"Infection","brand":"BioShield"},
-    {"name":"Aztreonam","type":"Injection","for":"Infection","brand":"AztroMed"},
-    {"name":"Ranitidine","type":"Tablet","for":"Acid Reflux","brand":"StopAcid"},
-    {"name":"Ciprofloxacin","type":"Tablet","for":"Infection","brand":"CiproSafe"},
-    {"name":"Naproxen","type":"Tablet","for":"Inflammation,Pain","brand":"AntiPain"},
-    {"name":"Levofloxacin","type":"Tablet","for":"Infection","brand":"LevoMed"},
-    {"name":"Metronidazole","type":"Tablet","for":"Infection","brand":"MetroHealth"},
-    {"name":"Clindamycin","type":"Capsule","for":"Infection","brand":"ClinBio"},
-    {"name":"Propranolol","type":"Tablet","for":"Hypertension","brand":"BetaCare"},
-    {"name":"Spironolactone","type":"Tablet","for":"Fluid Retention","brand":"AldoRelief"},
-    {"name":"Budesonide","type":"Inhaler","for":"Asthma","brand":"BudeBreathe"},
-    {"name":"Fluticasone","type":"Inhaler","for":"Asthma","brand":"FlutiPro"},
-    {"name":"Mometasone","type":"Cream","for":"Inflammation","brand":"DermCare"},
-    {"name":"Clobetasol","type":"Cream","for":"Skin Inflammation","brand":"TopiMed"},
-    {"name":"Hydrocortisone","type":"Cream","for":"Skin Inflammation","brand":"CortiRelief"},
-    {"name":"Aspirin","type":"Tablet","for":"Pain,Blood Thinner","brand":"CardioSafe"},
-    {"name":"Gabapentin","type":"Capsule","for":"Nerve Pain","brand":"NeuroEase"},
-    {"name":"Alprazolam","type":"Tablet","for":"Anxiety","brand":"AnxiCalm"},
-    {"name":"Omeprazole","type":"Tablet","for":"Acid Reflux","brand":"GastroRelief"},
-    {"name":"Pantoprazole","type":"Tablet","for":"Acid Reflux","brand":"Pantoloc"},
-    {"name":"Esomeprazole","type":"Capsule","for":"Acid Reflux","brand":"Nexium"},
-    {"name":"Rabeprazole","type":"Tablet","for":"Acid Reflux","brand":"AcipHex"}
-    
-  ]
-  
+    {
+        "name": "Ibuprofen",
+        "type": "Tablet",
+        "for": "Inflammation,Pain",
+        "brand": "MediCorp"
+    },
+    {
+        "name": "Cetirizine",
+        "type": "Syrup",
+        "for": "Allergy",
+        "brand": "AllerFree"
+    },
+    {
+        "name": "Amoxicillin",
+        "type": "Capsule",
+        "for": "Infection",
+        "brand": "BioPharm"
+    },
+    {
+        "name": "Azithromycin",
+        "type": "Tablet",
+        "for": "Infection",
+        "brand": "Zitromax"
+    },
+    {
+        "name": "Omeprazole",
+        "type": "Capsule",
+        "for": "Acid Reflux",
+        "brand": "StomaCare"
+    },
+    {
+        "name": "Metformin",
+        "type": "Tablet",
+        "for": "Diabetes",
+        "brand": "GlucoSafe"
+    },
+    {
+        "name": "Amlodipine",
+        "type": "Tablet",
+        "for": "Hypertension",
+        "brand": "CardioMax"
+    },
+    {
+        "name": "Losartan",
+        "type": "Tablet",
+        "for": "Hypertension",
+        "brand": "AngioPro"
+    },
+    {
+        "name": "Atorvastatin",
+        "type": "Tablet",
+        "for": "Cholesterol",
+        "brand": "CholesClean"
+    },
+    {
+        "name": "Salbutamol",
+        "type": "Inhaler",
+        "for": "Asthma",
+        "brand": "BreatheWell"
+    },
+    {
+        "name": "Prednisone",
+        "type": "Tablet",
+        "for": "Inflammation",
+        "brand": "SteroidCare"
+    },
+    {
+        "name": "Levothyroxine",
+        "type": "Tablet",
+        "for": "Thyroid",
+        "brand": "ThyroEase"
+    },
+    {
+        "name": "Hydrochlorothiazide",
+        "type": "Tablet",
+        "for": "Fluid Retention",
+        "brand": "Diurex"
+    },
+    {
+        "name": "Warfarin",
+        "type": "Tablet",
+        "for": "Blood Clot",
+        "brand": "Anticoag"
+    },
+    {
+        "name": "Insulin",
+        "type": "Injection",
+        "for": "Diabetes",
+        "brand": "InsuLife"
+    },
+    {
+        "name": "Captopril",
+        "type": "Tablet",
+        "for": "Hypertension",
+        "brand": "AngioRelief"
+    },
+    {
+        "name": "Clopidogrel",
+        "type": "Tablet",
+        "for": "Heart",
+        "brand": "PlateletCare"
+    },
+    {
+        "name": "Furosemide",
+        "type": "Tablet",
+        "for": "Edema",
+        "brand": "WaterClear"
+    },
+    {
+        "name": "Diazepam",
+        "type": "Tablet",
+        "for": "Anxiety",
+        "brand": "CalmWell"
+    },
+    {
+        "name": "Tramadol",
+        "type": "Tablet",
+        "for": "Pain",
+        "brand": "PainFree"
+    },
+    {
+        "name": "Morphine",
+        "type": "Injection",
+        "for": "Severe Pain",
+        "brand": "OpioidRelief"
+    },
+    {
+        "name": "Loratadine",
+        "type": "Tablet",
+        "for": "Allergy",
+        "brand": "AllerEasy"
+    },
+    {
+        "name": "Doxycycline",
+        "type": "Capsule",
+        "for": "Infection",
+        "brand": "BioShield"
+    },
+    {
+        "name": "Aztreonam",
+        "type": "Injection",
+        "for": "Infection",
+        "brand": "AztroMed"
+    },
+    {
+        "name": "Ranitidine",
+        "type": "Tablet",
+        "for": "Acid Reflux",
+        "brand": "StopAcid"
+    },
+    {
+        "name": "Ciprofloxacin",
+        "type": "Tablet",
+        "for": "Infection",
+        "brand": "CiproSafe"
+    },
+    {
+        "name": "Naproxen",
+        "type": "Tablet",
+        "for": "Inflammation,Pain",
+        "brand": "AntiPain"
+    },
+    {
+        "name": "Levofloxacin",
+        "type": "Tablet",
+        "for": "Infection",
+        "brand": "LevoMed"
+    },
+    {
+        "name": "Metronidazole",
+        "type": "Tablet",
+        "for": "Infection",
+        "brand": "MetroHealth"
+    },
+    {
+        "name": "Clindamycin",
+        "type": "Capsule",
+        "for": "Infection",
+        "brand": "ClinBio"
+    },
+    {
+        "name": "Propranolol",
+        "type": "Tablet",
+        "for": "Hypertension",
+        "brand": "BetaCare"
+    },
+    {
+        "name": "Spironolactone",
+        "type": "Tablet",
+        "for": "Fluid Retention",
+        "brand": "AldoRelief"
+    },
+    {
+        "name": "Budesonide",
+        "type": "Inhaler",
+        "for": "Asthma",
+        "brand": "BudeBreathe"
+    },
+    {
+        "name": "Fluticasone",
+        "type": "Inhaler",
+        "for": "Asthma",
+        "brand": "FlutiPro"
+    },
+    {
+        "name": "Mometasone",
+        "type": "Cream",
+        "for": "Inflammation",
+        "brand": "DermCare"
+    },
+    {
+        "name": "Clobetasol",
+        "type": "Cream",
+        "for": "Skin Inflammation",
+        "brand": "TopiMed"
+    },
+    {
+        "name": "Hydrocortisone",
+        "type": "Cream",
+        "for": "Skin Inflammation",
+        "brand": "CortiRelief"
+    },
+    {
+        "name": "Aspirin",
+        "type": "Tablet",
+        "for": "Pain,Blood Thinner",
+        "brand": "CardioSafe"
+    },
+    {
+        "name": "Gabapentin",
+        "type": "Capsule",
+        "for": "Nerve Pain",
+        "brand": "NeuroEase"
+    },
+    {
+        "name": "Alprazolam",
+        "type": "Tablet",
+        "for": "Anxiety",
+        "brand": "AnxiCalm"
+    },
+    {
+        "name": "Omeprazole",
+        "type": "Tablet",
+        "for": "Acid Reflux",
+        "brand": "GastroRelief"
+    },
+    {
+        "name": "Pantoprazole",
+        "type": "Tablet",
+        "for": "Acid Reflux",
+        "brand": "Pantoloc"
+    },
+    {
+        "name": "Esomeprazole",
+        "type": "Capsule",
+        "for": "Acid Reflux",
+        "brand": "Nexium"
+    }
+]
+ 

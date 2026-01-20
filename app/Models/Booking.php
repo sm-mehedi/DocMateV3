@@ -5,14 +5,15 @@ class Booking {
     public function __construct($conn){
         $this->conn = $conn;
     }
-     public function hasBooking($doctor_id, $patient_id){
+
+    public function hasBooking($doctor_id, $patient_id){
         $q = $this->conn->prepare(
             "SELECT * FROM bookings WHERE doctor_id=? AND patient_id=? AND status='booked'"
         );
         $q->execute([$doctor_id, $patient_id]);
         return $q->fetch(PDO::FETCH_ASSOC);
     }
-    
+
     public function book($doctor_id, $patient_id, $preferred_day){
         $existing = $this->hasBooking($doctor_id, $patient_id);
         if ($existing) return false;
@@ -107,7 +108,8 @@ public function deleteByDoctor($patient_id, $doctor_user_id) {
         $q->execute([$patient_id]);
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }
- public function myAllBookingsWithCancelInfo($patient_id){
+
+    public function myAllBookingsWithCancelInfo($patient_id){
         $q = $this->conn->prepare(
             "SELECT d.*, 
                     b.status, 
@@ -129,7 +131,7 @@ public function deleteByDoctor($patient_id, $doctor_user_id) {
         $q->execute([$patient_id]);
         return $q->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+
     public function forDoctor($user_id){
         $q = $this->conn->prepare(
             "SELECT p.*, 

@@ -99,3 +99,13 @@ $activeBookings = array_column(
     </div>
 <?php endif; ?>
 </div>
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>© <?= date('Y') ?> DocMate - Patient Portal</p>
+        <p><?= htmlspecialchars($patient['name']) ?> | Member Since: <?= date('F Y') ?></p>
+        <p style="font-size: 12px; margin-top: 10px; color: #bdc3c7;">
+        </p>
+    </div>
+</footer>

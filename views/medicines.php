@@ -2,14 +2,15 @@
 <html>
 <head>
   <title>Medicine List</title>
-  <link rel="stylesheet" href="../public/assets/css/medicine.css">
+  
+<link rel="stylesheet" href="../public/assets/css/medicine.css">
 </head>
 <body>
 <nav>
     <div class="nav-left">Patient View</div>
     <div class="nav-right">
-        <a href="./patient.php">Doctors</a>
-        <a href="./my_bookings.php">My Bookings</a>
+        <a href="./patient.php">Dashboard</a>
+        <a href="./my_bookings.php">Doctors</a>
         <a href="./medicines.php">Medicines</a>
 
        
@@ -25,6 +26,7 @@
 
   <div class="cards" id="medicineCards"></div>
 </div>
+
 
 <script>
 fetch('../public/assets/data/medicines.json')

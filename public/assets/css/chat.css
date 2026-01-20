@@ -1,0 +1,6 @@
+.chat-container { max-width: 600px; margin: 20px auto; }
+#chatMessages { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; background:#f9f9f9; }
+.message-card { margin-bottom: 10px; padding:5px; }
+.message-card small { color: gray; }
+form input, form textarea { width: 100%; margin-bottom: 5px; padding: 8px; }
+form button { padding: 8px 12px; cursor: pointer; }

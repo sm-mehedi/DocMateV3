@@ -22,8 +22,6 @@ $activeBookedDoctors = array_column(
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +33,7 @@ $activeBookedDoctors = array_column(
 <nav>
     <div class="nav-left">Patient View</div>
     <div class="nav-right">
-        <a href="./patient.php">My Bookings</a>
+        <a href="./patient.php">Dashboard</a>
         <a href="./my_bookings.php">Doctors</a>
         <a href="./medicines.php">Medicines</a>
 
@@ -187,4 +185,3 @@ document.getElementById('searchInput').addEventListener('input', function(){
 
 </body>
 </html>
-

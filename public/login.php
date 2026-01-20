@@ -11,7 +11,6 @@ if ($_POST) {
     $error = "Invalid email or password";
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

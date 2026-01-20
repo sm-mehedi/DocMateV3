@@ -19,3 +19,27 @@ $activeBookings = array_column(
 );
 
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="../public/assets/css/patient_dashboard.css">
+    
+</head>
+<body>
+<nav>
+    <div class="nav-left">Patient View</div>
+    <div class="nav-right">
+        <a href="./patient.php">My Bookings</a>
+        <a href="./my_bookings.php">Doctors</a>
+        <a href="./medicines.php">Medicines</a>
+
+        <div class="dropdown">
+            <?= htmlspecialchars($patient['name']) ?>
+            <div class="dropdown-content">
+                <a href="../public/logout.php">Logout</a>
+            </div>
+        </div>
+    </div>
+</nav>

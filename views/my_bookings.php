@@ -23,6 +23,7 @@ $activeBookedDoctors = array_column(
 
 ?>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -186,3 +187,4 @@ document.getElementById('searchInput').addEventListener('input', function(){
 
 </body>
 </html>
+

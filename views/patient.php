@@ -21,13 +21,14 @@ $activeBookings = array_column(
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>My Bookings</title>
     <link rel="stylesheet" href="../public/assets/css/patient_dashboard.css">
+    
 </head>
 <body>
-    <nav>
+<nav>
     <div class="nav-left">Patient View</div>
     <div class="nav-right">
         <a href="./patient.php">My Bookings</a>
@@ -42,7 +43,6 @@ $activeBookings = array_column(
         </div>
     </div>
 </nav>
-   
 
 <div class="container">
 <h2>My Booked Doctors</h2>
@@ -99,6 +99,7 @@ $activeBookings = array_column(
     </div>
 <?php endif; ?>
 </div>
+
 
 <footer class="footer">
     <div class="footer-content">
@@ -188,5 +189,3 @@ function removeBookingCard(bookingId) {
 </script>
 </body>
 </html>
-
-

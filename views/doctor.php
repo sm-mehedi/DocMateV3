@@ -293,3 +293,98 @@ $(document).ready(function(){
             }
         }, 'json');
     });
+
+   // Cancel appointment
+    $('.cancel-btn').click(function(){
+        if(!confirm('Are you sure you want to cancel this appointment?\n\nThe patient will be notified.')) return;
+
+        const btn = $(this);
+        const patient_id = btn.data('patient');
+        const card = $('#patient-' + patient_id);
+
+        btn.prop('disabled', true).text('Cancelling...');
+
+        $.post('../public/cancel-appointment.php', { patient_id }, function(data){
+            if(data.success){
+                card.fadeOut(300, function() {
+                    $(this).remove();
+                    updatePatientCount();
+                });
+                alert('Appointment cancelled successfully.');
+            } else {
+                alert(data.message || 'Cancel failed.');
+                btn.prop('disabled', false).text('❌ Cancel Appointment');
+            }
+        }, 'json');
+    });
+
+    // Mark as Seen (DELETE booking)
+    $('.mark-seen-btn').click(function(){
+        if(!confirm('Mark this patient as seen?')) return;
+
+        const btn = $(this);
+        const patient_id = btn.data('patient');
+        const card = $('#patient-' + patient_id);
+
+        btn.prop('disabled', true).text('Deleting...');
+
+        $.post('../public/mark-seen.php', { patient_id }, function(data){
+            if(data.success){
+                card.fadeOut(300, function() {
+                    $(this).remove();
+                    updatePatientCount();
+                });
+                alert('Patient marked as seen and booking deleted.');
+            } else {
+                alert(data.message || 'Failed to mark as seen.');
+                btn.prop('disabled', false).text('✅ Mark as Seen (Delete)');
+            }
+        }, 'json');
+    });
+
+    // Update patient count
+    function updatePatientCount() {
+        const count = $('#patient-cards .card').length;
+        $('#patients h3 .badge').text(count + ' Active');
+        $('.stat-card:first-child .stat-number').text(count);
+        $('.stat-card:nth-child(2) .stat-number').text(count);
+    }
+    
+ // Smooth scrolling
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if(this.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
+
+    // Scroll to top
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Show scroll to top button
+    window.addEventListener('scroll', function() {
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        if (window.scrollY > 300) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    });
+});
+</script>
+</body>
+</html>

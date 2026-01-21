@@ -74,4 +74,4 @@ It provides role-based access control with three user types, each having special
 
 ### Step 1 – Clone the project
 ```bash
-git clone [repository-url] docmate
+git clone [https://github.com/sm-mehedi/DocMateV3] docmate

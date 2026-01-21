@@ -22,7 +22,6 @@ $stmt = $conn->prepare("SELECT d.*, u.email FROM doctors d JOIN users u ON d.use
 $stmt->execute([$user_id]);
 $doctor = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Initialize messages
 $profileSuccess = '';
 $profileError = '';
 
@@ -71,7 +70,6 @@ if(isset($_POST['update_doctor_profile'])){
             $stmt = $conn->prepare("UPDATE doctors SET name = ?, degree = ?, phone = ?, bmdc = ?, nid = ?, address = ?, chamber = ?, available_days = ?, available_time = ?, description = ? WHERE user_id = ?");
             $stmt->execute([$name, $degree, $phone, $bmdc, $nid, $address, $chamber, $available_days, $available_time, $description, $user_id]);
             
-            // Update password if provided
             if(!empty($new_password)) {
                 $stmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
                 $stmt->execute([$new_password, $user_id]);

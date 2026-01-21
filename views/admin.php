@@ -2,19 +2,16 @@
 session_start();
 require "../app/config/database.php";
 
-// Only admin can access
 if(!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin'){
     header("Location: ../public/login.php");
     exit;
 }
 
-// Get current admin info
 $admin_id = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT email FROM users WHERE id = ?");
 $stmt->execute([$admin_id]);
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Initialize messages
 $errors = [];
 $success = '';
 $medicineError = '';

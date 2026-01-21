@@ -1,4 +1,3 @@
-/* Retro Signup Form CSS */
 
 * {
     margin: 0;
@@ -15,7 +14,6 @@ body {
     color: #222;
 }
 
-/* Signup Container */
 .signup-container {
     background: #fdfdfd;
     padding: 30px;
@@ -23,7 +21,6 @@ body {
     border-radius: 6px;
 }
 
-/* Heading */
 h2 {
     color: #111;
     text-align: center;
@@ -32,7 +29,6 @@ h2 {
     padding-bottom: 10px;
 }
 
-/* Messages */
 .error-message {
     color: #721c24;
     background: #f8d7da;
@@ -60,7 +56,6 @@ h2 {
     display: block;
 }
 
-/* Form Groups */
 .form-group {
     margin-bottom: 15px;
 }
@@ -95,7 +90,6 @@ input:focus, textarea:focus {
     box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
 }
 
-/* Checkbox Sections */
 .checkbox-section {
     margin: 15px 0;
     padding: 15px;
@@ -123,7 +117,6 @@ input:focus, textarea:focus {
     margin-right: 8px;
 }
 
-/* Condition Categories */
 .condition-category {
     margin-bottom: 15px;
     padding-bottom: 10px;
@@ -135,8 +128,6 @@ input:focus, textarea:focus {
     color: #111;
     font-size: 14px;
 }
-
-/* Buttons */
 button {
     width: 100%;
     padding: 12px;
@@ -154,7 +145,6 @@ button:hover {
     background: #2ecc71;
 }
 
-/* Back Link */
 .back-link {
     text-align: center;
     margin-top: 15px;
@@ -170,13 +160,11 @@ button:hover {
     text-decoration: underline;
 }
 
-/* Required Field Indicator */
 .required::after {
     content: " *";
     color: #721c24;
 }
 
-/* Form Rows */
 .form-row {
     display: flex;
     gap: 15px;
@@ -186,7 +174,6 @@ button:hover {
     flex: 1;
 }
 
-/* Other Conditions Textarea */
 .other-conditions {
     margin-top: 15px;
 }

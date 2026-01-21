@@ -1221,7 +1221,6 @@ function addMedicineRow() {
         brand: ''
     });
     
-    // If we're showing limited view and just exceeded it, show load more button
     if (!showingAll && allMedicines.length > INITIAL_SHOW && loadMoreBtn) {
         loadMoreBtn.style.display = 'inline-block';
     }
